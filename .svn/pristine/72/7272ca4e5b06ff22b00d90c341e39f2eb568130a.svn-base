@@ -1,0 +1,42 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package dataStorage;
+
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+
+/**
+ *
+ * @author marcel
+ */
+@Named(value = "bean_block")
+@Dependent
+public class bean_block {
+
+    private stadium stadium;
+    private block block;
+    private category category;
+
+    public block getBlock() {
+        return (block) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("selectedBlock");
+    }
+    
+    
+    public stadium getStadium() {
+        return (stadium) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("selectedStadium");
+    }
+
+    public category getCategory() {
+        return (category) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("selectedCat");
+    }
+  
+    public bean_block() {
+        
+    }
+    
+}

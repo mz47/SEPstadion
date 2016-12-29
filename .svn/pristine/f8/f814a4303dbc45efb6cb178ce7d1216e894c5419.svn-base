@@ -1,0 +1,52 @@
+package drawing;
+
+import java.util.Map;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+
+@Named(value = "stadion")
+@Dependent
+
+public class Stadion
+{
+    private String SpielId;
+    private String StadionId;
+    private String Stadion;
+    
+    public String getStadionId() {
+        return StadionId;
+    }
+
+    public void setStadionId(String StadionId) {
+        this.StadionId = StadionId;
+    }
+
+    public String getSpielId() {
+        return SpielId;
+    }
+
+    public void setSpielId(String SpielId) {
+        this.SpielId = SpielId;
+    }
+    
+    
+    public Stadion() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+        
+        this.SpielId = params.get("SpielId");
+        this.StadionId = params.get("StadionId");
+        
+        Draw();
+    }
+    public String getStadion() {
+        return this.Stadion;
+    }
+    private void Draw()
+    {
+        XmlWrapper xml = new XmlWrapper();
+        Stadion = xml.GetSpielById("C:\\Spiel.xml", this.SpielId);
+    }
+    
+}

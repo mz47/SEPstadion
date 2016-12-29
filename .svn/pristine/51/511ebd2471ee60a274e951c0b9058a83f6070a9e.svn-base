@@ -1,0 +1,21 @@
+.seat {
+    width: 32px;
+    height: 32px;
+    background-color: #666;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    line-height: 32px;
+    text-align: center;
+    position: relative;
+}
+div.seat#occupied {
+    background-color: #ff0000;
+}
+div.seat#free {
+    background-color: #060;
+}
+.seat:hover {
+    background-color: #ccc;
+}

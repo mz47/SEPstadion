@@ -1,0 +1,16 @@
+.seat {
+    width: 25px;
+    height: 25px;
+    background-color: #162a4f;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    line-height: 25px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+.seat:hover {
+    background-color: #162a40;
+}

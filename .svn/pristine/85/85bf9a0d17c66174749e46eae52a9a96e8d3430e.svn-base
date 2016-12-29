@@ -1,0 +1,19 @@
+
+package inputs;
+
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+
+@Named(value = "bean_nav")
+@Dependent
+public class bean_nav {
+
+    public bean_nav() {
+        
+    }
+    
+    public String gotoStadium()
+    {
+        return "Stadium";
+    }
+}

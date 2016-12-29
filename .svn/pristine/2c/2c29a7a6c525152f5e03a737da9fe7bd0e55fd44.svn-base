@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Spiel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="SpielXMLSchema.xsd">
+    <Termin>2014-06-12</Termin>
+    <ID>01</ID>
+    <Art>Gruppenphase</Art>
+    <Mannschaft1>Italien</Mannschaft1>
+    <Mannschaft2>Brasilien</Mannschaft2>
+    <StadionID>0001</StadionID>
+    <Preismultiplikator>2</Preismultiplikator>
+</Spiel>

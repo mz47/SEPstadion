@@ -1,0 +1,58 @@
+
+package login;
+
+import dataStorage.log;
+import javax.enterprise.context.Dependent;
+import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+
+@Named(value = "bean_login")
+@Dependent
+@SessionScoped
+public class bean_login {
+
+    private String user;
+    private String password;
+    
+    public bean_login() {
+        
+    }
+    
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public String login()
+    {
+        if(user != null && password != null)
+        {
+            if(user.equals("sep") && password.equals("sep"))
+            {
+                return "Backend";
+            }
+            else
+            {
+                log.printLog("login", "user wrong, password wrong");
+                return "login";
+            }
+        }
+        else
+        {
+            log.printLog("login", "user null, password null");
+            return "index";
+        }
+    }
+
+}

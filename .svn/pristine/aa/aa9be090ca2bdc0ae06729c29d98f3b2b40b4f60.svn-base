@@ -1,0 +1,35 @@
+
+package drawing;
+
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+
+@Named(value = "bean_customer")
+@Dependent
+public class bean_customer {
+
+    private String email;
+    private int passportId;
+
+    public bean_customer() {
+        
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        
+        this.email = email;
+    }
+
+    public int getPassportId() {
+        return passportId;
+    }
+
+    public void setPassportId(int passportId) {
+        this.passportId = passportId;
+    }
+    
+}

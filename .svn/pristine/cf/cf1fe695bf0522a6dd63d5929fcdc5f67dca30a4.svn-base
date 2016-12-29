@@ -1,0 +1,159 @@
+
+package dataStorage;
+
+import java.util.ArrayList;
+
+public abstract class data
+{
+
+    private static ArrayList<game> games;
+    private static stadium stadium;
+    private static game activeGame;
+    private static stadium activeStadium;
+    private static block activeBlock;
+    private static category activeCategory;
+    private static ArrayList<seat> selectedSeats;
+    
+    public static ArrayList<game> getGames() {
+        return games;
+    }
+
+    public static void setGames(ArrayList<game> games) {
+        data.games = games;
+    }
+    
+    public static int getGamesSize()
+    {
+        if(games != null)
+        {
+            return games.size();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    public static stadium getStadium() {
+        return stadium;
+    }
+
+    public static void setStadium(stadium stadium) {
+        data.stadium = stadium;
+    }
+    
+    public static boolean getStadiumLoaded()
+    {
+        if(stadium != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static game getActiveGame() {
+        return activeGame;
+    }
+
+    public static void setActiveGame(game activeGame) {
+        data.activeGame = activeGame;
+    }
+
+    public static stadium getActiveStadium() {
+        return activeStadium;
+    }
+
+    public static void setActiveStadium(stadium activeStadium) {
+        data.activeStadium = activeStadium;
+    }
+
+    public static block getActiveBlock() {
+        return activeBlock;
+    }
+
+    public static void setActiveBlock(block activeBlock) {
+        data.activeBlock = activeBlock;
+    }
+
+    public static category getActiveCategory() {
+        return activeCategory;
+    }
+
+    public static void setActiveCategory(category activeCategory) {
+        data.activeCategory = activeCategory;
+    }
+
+    public static ArrayList<seat> getSelectedSeat() {
+        return selectedSeats;
+    }
+
+    public static void setSelectedSeats(ArrayList<seat> seats) {
+        data.selectedSeats = seats;
+    }
+    
+    public static int getNumberOfOccupiedSeats()
+    {
+        if(stadium != null)
+        {
+            int counter = 0;
+            for(block b : stadium.getBlocks())
+            {
+                for(seat s_0 : b.getCat_0().getSeats())
+                {
+                    if(s_0.isOccupied())
+                    {
+                        counter++;
+                    }
+                }
+                for(seat s_1 : b.getCat_1().getSeats())
+                {
+                    if(s_1.isOccupied())
+                    {
+                        counter++;
+                    }
+                }
+                for(seat s_2 : b.getCat_2().getSeats())
+                {
+                    if(s_2.isOccupied())
+                    {
+                        counter++;
+                    }
+                }
+            }
+            return counter;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    public static void addSelectedSeat(seat seat)
+    {
+        if(seat != null)
+        {
+            selectedSeats.add(seat);
+        }
+    }
+    
+    public static String getSelectedSeatsToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        if(selectedSeats != null)
+        {
+            for(seat s : selectedSeats)
+            {
+                sb.append(s.getId());
+                sb.append(", ");
+            }
+            return sb.toString();
+        }
+        else
+        {
+            return "no seats";
+        }
+    }
+}

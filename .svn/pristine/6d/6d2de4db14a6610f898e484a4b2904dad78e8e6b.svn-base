@@ -1,0 +1,50 @@
+
+package buying;
+
+import dataStorage.block;
+import dataStorage.category;
+import dataStorage.god;
+import dataStorage.log;
+import dataStorage.seat;
+import dataStorage.stadium;
+import javax.faces.context.FacesContext;
+
+public abstract class Stornierung {
+    
+    public static String cancel(String id)
+    {
+        boolean success = false;
+        
+        for(transaction t : god.getTransactions())
+        {
+            if(t.getId().equals(id))
+            {
+                stadium s = (stadium) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("stadium");
+                block b = (block) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("block");
+                category c = (category) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("category");
+                
+                log.printLog("cancel", "trans.seats.size: " + t.getSeats().size());
+                
+                for(seat seat : t.getSeats())
+                {
+                    god.setOccupied(seat, false);
+                    log.printLog("cancel", "seat: " + seat.getId() + " set occupied = false");
+                }
+                
+                t.setCancelled(true);
+                success = true;
+                
+                
+            }
+        }
+        
+        if(success)
+        {
+            return "Ihre Bestellung mit der Rechnungsnummer " + id + " wurde erfolgreich storniert.";
+        }
+        else
+        {
+            return "Rechnungsnummer " + id + " nicht gefunden.";
+        }
+    }   
+}

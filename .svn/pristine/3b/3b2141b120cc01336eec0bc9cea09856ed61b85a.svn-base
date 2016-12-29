@@ -1,0 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package buying; //evtl. auch dataStorage
+
+/**
+ *
+ * @author Manuel
+ */
+public class Platzabfrage {
+    
+    public Boolean[] getPlaetze(String Block) //gibt alle Plätze in einem Array zurück, mit der Info ob frei oder nicht, true = frei
+    {   
+        int anzahlSitze=1; //Hier muss natürlich eigentlich die Anzahl der Sitze des übergebenen Blocks gespeichert werden!
+        Boolean[] antwort = new Boolean[anzahlSitze];
+        
+            for (int i = 0; i < anzahlSitze; i++){
+                //antwort[i]= Logik(i-ter Platz = frei?)
+            }
+            
+        return antwort;
+    }
+    
+    public Boolean getPlatzStatus(String Block, String Platznr) //gibt den Belegunsstatus zu einem konkreten Platz zurück
+    {
+        boolean antwort;
+        antwort = false;
+        //antwort = Logik(Platz mit der Nummer Platznr im Block mit dem Namen Block frei)
+        return antwort;
+    }
+    
+}

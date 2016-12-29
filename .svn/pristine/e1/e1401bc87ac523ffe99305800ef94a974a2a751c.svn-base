@@ -1,0 +1,137 @@
+package drawing;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import java.io.File;
+
+//TODO stringbuilder anstatt += da schneller
+//TODO exception handling
+public class XmlWrapper
+{
+    public String GetSpiele(String Path)
+    {
+        String output = "";
+        try
+        {
+            File xml = new File(Path);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(xml);
+            
+           doc.getDocumentElement().normalize();
+           
+           NodeList list = doc.getElementsByTagName("Spiel");
+           
+           for(int i = 0; i < list.getLength(); i++)
+           {
+               Node node = list.item(i);
+               if(node.getNodeType() == Node.ELEMENT_NODE)
+               {
+                   Element element = (Element) node;
+                   output += "Spiel " + element.getElementsByTagName("ID").item(0).getTextContent() + ": ";
+                   output += element.getElementsByTagName("Mannschaft1").item(0).getTextContent();
+                   output += " vs. ";
+                   output += element.getElementsByTagName("Mannschaft2").item(0).getTextContent();
+                   output += " (" + element.getElementsByTagName("Termin").item(0).getTextContent() + ")";
+               }
+           }
+           return output;
+        }
+        catch(Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+    
+    public String GetSpielById(String Path, String Id)
+    {
+        String spiel = "";
+        try
+        {
+            File xml = new File(Path);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(xml);
+            
+           doc.getDocumentElement().normalize();
+           
+           NodeList list = doc.getElementsByTagName("Spiel");
+           
+           for(int i = 0; i < list.getLength(); i++)
+           {
+               Node node = list.item(i);
+               if(node.getNodeType() == Node.ELEMENT_NODE)
+               {
+                   Element element = (Element) node;
+                   if(element.getElementsByTagName("ID").item(0).getTextContent().equals(Id))
+                   {
+                        spiel += "ID: " + element.getElementsByTagName("ID").item(0).getTextContent() + "<br />";
+                        spiel += "Termin:" + element.getElementsByTagName("Termin").item(0).getTextContent() + "<br />";
+                        spiel += "Art: " + element.getElementsByTagName("Art").item(0).getTextContent() + "<br />";
+                        spiel += "Mannschaft 1: " + element.getElementsByTagName("Mannschaft1").item(0).getTextContent() + "<br />";
+                        spiel += "Mannschaft 2: " + element.getElementsByTagName("Mannschaft2").item(0).getTextContent() + "<br />";
+                        spiel += "Stadion ID: " + element.getElementsByTagName("StadionID").item(0).getTextContent() + "<br />";
+                        spiel += "Preismultiplikator: " + element.getElementsByTagName("Preismultiplikator").item(0).getTextContent() + "<br />";
+                   }
+               }
+           }
+           return spiel;
+        }
+        catch(Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+    
+    public String GetBlock(String Path, String Richtung)
+    {
+        String block;
+        int sitze = 0;
+        try
+        {
+            File xml = new File(Path);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(xml);
+            
+           doc.getDocumentElement().normalize();
+           //TODO Kategorien? Aktuell nur 'Vorne' ('Loge')
+           NodeList list = doc.getElementsByTagName(Richtung);
+           
+           
+           for(int i = 0; i < list.getLength(); i++)
+           {
+               Node node = list.item(i);
+               
+               if(node.getNodeType() == Node.ELEMENT_NODE)
+               {
+                   Element e = (Element) node;
+                   sitze = Integer.parseInt(e.getElementsByTagName("AnzahlSitze").item(0).getTextContent());
+                   
+                    //block += "Name: " + e.getElementsByTagName("Name").item(0).getTextContent() + "<br />";
+                    //block += "Anzahl Sitze: " + e.getElementsByTagName("AnzahlSitze").item(0).getTextContent() + "<br />";
+                    //block += "Kategorie: " + e.getElementsByTagName("KategorieName").item(0).getTextContent() + "<br />";
+                    //block += "Grundpreis: " + e.getElementsByTagName("Grundpreis").item(0).getTextContent() + "<br /><br />";
+               }
+           }
+           block = "";
+           for(int i = 0; i < sitze; i++)
+           {
+               if(i % 10 == 0)
+               {
+                   block += "<div id='clear'></div>";
+               }
+               block += "<div class='sitz'># " + i + "</div>";
+           }
+           return block;
+        }
+        catch(Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+}

@@ -1,0 +1,36 @@
+
+package buying;
+
+public class customer {
+
+    private String email;
+    private int passportId;
+    
+    public customer()
+    {
+        
+    }
+    
+    public customer(String email, int passportId)
+    {
+        this.email = email;
+        this.passportId = passportId;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getPassportId() {
+        return passportId;
+    }
+
+    public void setPassportId(int passportId) {
+        this.passportId = passportId;
+    }
+    
+}

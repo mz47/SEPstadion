@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+    	<ui:composition template="/WEB-INF/template/Template.xhtml">          
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid columns="3" id="panelName" columnClasses="gridCol" rowClasses="gridRow">
+                        Gewähltes Spiel: <h:outputText value="#{bean_data.activeGame.team1} vs. #{bean_data.activeGame.team2} am #{bean_data.activeGame.date}"></h:outputText><h:outputLabel></h:outputLabel>
+                        Gewähltes Stadion: <h:outputText value="#{bean_data.activeStadium.name}"></h:outputText><h:outputLabel></h:outputLabel>
+                        Gewählter Block: <h:outputText value="#{bean_data.activeBlock.name}"></h:outputText><h:outputLabel></h:outputLabel>
+                        Gewählte Kategorie: <h:outputText value="#{bean_data.activeCategory.name}"></h:outputText><h:outputLabel></h:outputLabel>
+                        Gewählte Sitzplätze: <h:outputText value="#{bean_data.selectedSeatsToString}"></h:outputText><h:outputLabel></h:outputLabel>
+                        Preis: <h:outputText value="#{bean_buyseats.price}" style="font-weight: bold;"></h:outputText><h:outputLabel></h:outputLabel>
+                        
+                        <h:outputLabel id="lbEmail" value="Email-Adresse: "></h:outputLabel>
+                        <h:inputText label="lbEmail" id="txEmail" value="#{bean_customer.email}" required="true" requiredMessage="Bitte Email-Adresse angeben.">
+                            <f:validateLength minimum="5" maximum="50" />
+                        </h:inputText>
+                        <h:message for="txEmail" style="color:#ff0000;">Bitte ausfüllen.</h:message>
+                        Pass-IDs:<br />
+                        <div style="font-size: 12px">Bitte eine Pass-ID pro Zeile</div>
+                        <h:inputTextarea label="lbPassport" value="#{bean_customer.passportId}" id="txPassport" required="true" requiredMessage="Bitte Pass-ID(s) angeben.">
+                            <f:validateRequired for="txPassport" />
+                            <f:validateLength minimum="3" maximum="999" />
+                        </h:inputTextarea>
+                        <h:message for="txPassport" style="color:#ff0000;">Bitte ausfüllen.</h:message>
+                        <h:outputLabel></h:outputLabel>
+                        <h:commandButton value="Kostenpflichtig kaufen" action="#{bean_cup.checkout}"></h:commandButton>
+                    </h:panelGrid>
+                    <!--<h:panelGrid columns="2" columnClasses="gridCol" id="gridPassport" binding="#//{bean_cup.passportGrid}"></h:panelGrid>-->
+                </h:form>
+            </ui:define>   
+    	</ui:composition>
+    </h:body>
+</html>

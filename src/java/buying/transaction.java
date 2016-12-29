@@ -1,0 +1,109 @@
+
+package buying;
+
+import dataStorage.log;
+import dataStorage.seat;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class transaction implements Serializable {
+    
+    private String id;
+    private int stadionId;
+    private String blockPosition;
+    private String categoryName;
+    private customer customer;
+    private ArrayList<seat> seats;
+    private Date date;
+    private boolean cancelled;
+    
+    public transaction()
+    {
+        
+    }
+    
+    public transaction(int stadionId, String blockPos, String categoryName, customer customer, ArrayList<seat> seats)
+    {
+        this.stadionId = stadionId;
+        this.blockPosition = blockPos;
+        this.categoryName = categoryName;
+        this.id = utils.md5.toMd5("id" + System.currentTimeMillis());
+        this.customer = customer;
+        this.seats = seats;
+        this.date = new Date();
+        this.cancelled = false;
+    }
+    
+    public String getId()
+    {
+        return this.id;
+    }
+    
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+    
+    
+    public int getStadionId() {
+        return stadionId;
+    }
+
+    public void setStadionId(int stadionId) {
+        this.stadionId = stadionId;
+    }
+
+    public String getBlockPosition() {
+        return blockPosition;
+    }
+
+    public void setBlockPosition(String blockPosition) {
+        this.blockPosition = blockPosition;
+    }
+
+    public String getCategoryIndex() {
+        return categoryName;
+    }
+
+    public void setCategoryIndex(String categoryIndex) {
+        this.categoryName = categoryIndex;
+    }
+    
+    public customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(customer customer) {
+        this.customer = customer;
+    }
+
+    public ArrayList<seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(ArrayList<seat> seats) {
+        this.seats = seats;
+    }
+    
+    public Date getDate()
+    {
+        return this.date;
+    }
+    
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+    
+    public boolean isCancelled()
+    {
+        return this.cancelled;
+    }
+    
+    public void setCancelled(boolean cancelled)
+    {
+        this.cancelled = cancelled;
+    }
+
+}

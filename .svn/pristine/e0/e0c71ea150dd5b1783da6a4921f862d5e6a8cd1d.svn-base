@@ -1,0 +1,52 @@
+/* CSS Document */
+body {
+	background-image: url("#{resource['images/body.jpg']}");
+	background-position: top;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+div#container {
+	width: 1000px;
+	min-height: 1000px;
+	margin-left: auto;
+	margin-right: auto;	
+}
+div#title {
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-size: 35px;
+	position: relative;
+	top: 20px;
+        width: 100%;
+        background-color: #162a4f;
+        background: rgba(22, 42, 79, 0.85);
+}
+div#header {
+	background-image: url("#{resource['images/header.jpg']}");
+	background-position: top;
+	height: 500px;
+	width: 1000px;
+	margin-bottom: 25px;
+}
+div#body {
+	min-height: 500px;
+	margin-bottom: 10px;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.6);
+}
+div#footer {
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+	color: #999;
+}
+.rounded {
+	-moz-border-radius: 10px;
+	border-radius: 10px;	
+}
+.shadow {
+	box-shadow: 1px 1px 15px 1px #000;
+}
+.text-shadow {
+	text-shadow: 3px 3px 5px #000;	
+}

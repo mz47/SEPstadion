@@ -1,0 +1,385 @@
+
+package drawing;
+
+import buying.customer;
+import buying.transaction;
+import dataStorage.block;
+import dataStorage.category;
+import dataStorage.game;
+import dataStorage.god;
+import dataStorage.log;
+import dataStorage.seat;
+import dataStorage.stadium;
+import dataStorage.wrapper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import javax.el.MethodExpression;
+import javax.el.ValueExpression;
+import javax.enterprise.context.Dependent;
+import javax.faces.application.Application;
+import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlForm;
+import javax.faces.component.html.HtmlInputText;
+import javax.faces.component.html.HtmlOutputLabel;
+import javax.faces.component.html.HtmlOutputText;
+import javax.faces.component.html.HtmlPanelGrid;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+
+@Named(value = "cup")
+@Dependent
+public abstract class cup {
+    
+    private static final int SEATS_IN_ROW = 20;
+    private static final String STYLE_OCCUPIED = "occupied";
+    private static final String STYLE_SELECTED = "selected";
+    private static final String STYLE_FREE = "free";
+    
+    public cup()
+    {
+        //drawGames();
+    }
+    
+    public static String startUp()
+    {
+        try
+        {
+            ArrayList<game> games = wrapper.getGames();
+            ArrayList<stadium> stadiums = wrapper.getStadiums();
+           
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("game", null);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("stadium", null);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("block", null);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("category", null);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("email", null);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("seats", new ArrayList<>());
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("passportids", new ArrayList<>());
+
+            god.setStadiums(stadiums);
+
+            god.setGames(games);
+            god.setSeats(new ArrayList<>());
+            god.setTransactions(new ArrayList<>());
+
+            return "index";
+        }
+        catch(Exception ex)
+        {
+            //log.printException(ex);
+            return "index";
+        }
+    }
+    public static void clearSeatsContext()
+    {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("seats", new ArrayList<>());
+    }
+    public static void clearBlockContext()
+    {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("block");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("category");
+        clearSeatsContext();
+    }
+    public static void clearGameContext()
+    {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("game");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("stadium");
+        clearSeatsContext();
+        clearBlockContext();
+    }
+
+    public static String selectCategory(String blockPosition, int categoryIndex)
+    {
+        clearBlockContext();
+        
+        stadium stadium = (stadium) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("stadium");
+        block block = stadium.getBlock(blockPosition);
+        category category = block.getCategory(categoryIndex);
+                
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("block", block);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("category", category);
+        
+        return "Block";
+    }
+    
+    public static String selectSeat(int index)
+    {
+        ArrayList<seat> seats = (ArrayList<seat>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("seats");
+        
+        category c = (category) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("category");
+        
+        log.printLog("selectseat", "index: " + index + ", numberofseats: " + c.getNumberOfSeats());
+
+        seat s = c.getSeat(index);
+        //s.setOccupied(true);
+        //endgültige reservierung        
+        //god.addSeat(s);
+        if(seats.contains(s))
+        {
+            seats.remove(s);
+        }
+        else
+        {
+            seats.add(s);
+        }
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().replace("seats", seats);
+        
+        return "Block";
+    }
+        
+    public static String selectGame(int gameId, int stadiumId)
+    {
+        game game = god.getGames().get(gameId - 1);
+        stadium stadium = god.getStadiums().get(stadiumId - 1);
+
+        clearBlockContext();
+        
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("game", game);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("stadium", stadium);
+        
+        return "Stadion";
+    }
+        
+    public static HtmlForm drawGames()
+    {
+        try
+        {
+            clearGameContext();
+            
+            ArrayList<game> games = wrapper.getGames();
+            Application app = FacesContext.getCurrentInstance().getApplication();
+            HtmlForm form = (HtmlForm) app.createComponent(HtmlForm.COMPONENT_TYPE);
+
+            if(games.isEmpty() == false)
+            {
+                for (game g : games)
+                {
+                    HtmlCommandLink link = (HtmlCommandLink) app.createComponent(HtmlCommandLink.COMPONENT_TYPE);
+                    HtmlOutputText newline = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+
+                    link.setValue(g.getDate() + ": " + g.getTeam1() + " vs. " + g.getTeam2() + " (StadionID: " + g.getStadiumId() + ")");
+                    link.setActionExpression(createMethodExpression("#{bean_cup.selectGame("+g.getId()+", "+g.getStadiumId()+")}", String.class));
+                    link.setId("game_" + g.getId());
+
+                    newline.setValue("<br /><br />");
+                    newline.setEscape(false);
+                    newline.setId("newline_" + g.getId());
+
+                    form.getChildren().add(link);
+                    form.getChildren().add(newline);
+                }
+            }
+            else
+            {
+                HtmlOutputText nogames = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+                nogames.setValue("Keine Spiele gefunden.");
+                form.getChildren().add(nogames);
+            }
+            form.setId("form_games");
+            return form;
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
+    }
+    
+    public static String getCategoryName(String pos, int index)
+    {
+        stadium stadium = (stadium) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("stadium");
+        block block = stadium.getBlock(pos);
+        return block.getCategory(index).getName();
+    }
+
+    public static HtmlForm drawSeats()
+    {
+        try
+        {
+            ArrayList<seat> selectedSeats = (ArrayList<seat>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("seats");
+            category category = (category) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("category");
+
+            log.printLog("drawSeats", "selected category: " + category.getName());
+
+            int seats = category.getNumberOfSeats();
+            Application app = FacesContext.getCurrentInstance().getApplication();
+            HtmlForm form = (HtmlForm) app.createComponent(HtmlForm.COMPONENT_TYPE);
+            form.setId("form_seats");
+            HtmlOutputText back = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+            back.setValue("<p><a href='Stadion.xhtml'>Zurück</a></p>");
+            back.setEscape(false);
+            back.setId("back");
+            form.getChildren().add(back);
+
+            log.printLog("drawSeats", "selected category number of seats: " + category.getNumberOfSeats());
+            
+            if(seats == 0)
+            {
+                HtmlOutputText noSeats = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+                noSeats.setValue("Keine Sitzplätze in dieser Kategorie gefunden.<br />Bitte wählen Sie eine andere Kategorie.");
+                noSeats.setId("noSeats");
+                noSeats.setEscape(false);
+                form.getChildren().add(noSeats);
+            }
+            else
+            {
+                String style = STYLE_FREE;
+                for(int i = 0; i < seats; i++)
+                {                    
+                    HtmlCommandLink link = (HtmlCommandLink) app.createComponent(HtmlCommandLink.COMPONENT_TYPE);
+                    link.setValue(i);
+
+                    
+                    if(category.getSeat(i).isOccupied() == true)
+                    {
+                        style = STYLE_OCCUPIED;
+                        link.setDisabled(true);
+                    }
+                    else
+                    {
+                        if(selectedSeats.size() > 0 && selectedSeats.contains(category.getSeat(i)))
+                        {
+                            style = STYLE_SELECTED;
+                        }
+                        else
+                        {
+                            style = STYLE_FREE;
+                        }
+                    }
+
+                    link.setActionExpression(createMethodExpression("#{bean_cup.selectSeat("+i+")}", String.class));
+                    //link.setActionExpression(createMethodExpression("Stadium", String.class));
+                    link.setId("seat_" + i);
+
+                    HtmlOutputText openDiv = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+                    HtmlOutputText closeDiv = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+
+                    openDiv.setValue("<div class='seat' id='" + style + "'>");
+                    closeDiv.setValue("</div>");
+                    openDiv.setEscape(false);
+                    closeDiv.setEscape(false);
+
+                    if(i % SEATS_IN_ROW == 0)
+                    {
+                        HtmlOutputText clear = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+                        clear.setValue("<div class='clear'></div>");
+                        clear.setId("clear_" + i);
+                        clear.setEscape(false);
+                        form.getChildren().add(clear);
+                    }
+
+                    form.getChildren().add(openDiv);
+                    form.getChildren().add(link);
+                    form.getChildren().add(closeDiv);
+                }
+            }
+            return form;
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return null;
+        }
+    }
+    
+    public static HtmlPanelGrid drawPassportInput()
+    {
+        int counter = 0;
+        category c = (category) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("category");
+        ArrayList<seat> seats = (ArrayList<seat>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("seats");
+        
+        Application app = FacesContext.getCurrentInstance().getApplication();
+        HtmlPanelGrid form = (HtmlPanelGrid) app.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
+        
+        for(seat s : seats)
+        {
+            HtmlOutputLabel label = (HtmlOutputLabel) app.createComponent(HtmlOutputLabel.COMPONENT_TYPE);
+            HtmlInputText text = (HtmlInputText) app.createComponent(HtmlInputText.COMPONENT_TYPE);
+            
+            label.setValue("Passnummer für Platz #" + s.getId() + ": ");
+            text.setId("passportId_" + s.getId());
+            //text.setValueExpression(createValueExpression("", String.class));
+
+            form.getChildren().add(label);
+            form.getChildren().add(text);
+            
+            counter++;
+        }
+        return form;
+    }
+    
+    public static String checkout()
+    {
+        ArrayList<seat> seats = (ArrayList<seat>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("seats");
+        //DEBUG fixed value
+        stadium god_stadium = god.getStadiums().get(0);
+        block current_block = (block) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("block");
+        //DEBUG fixed value
+        block god_block = god_stadium.getBlock(current_block.getPos());
+        category current_category = (category) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("category");
+        category god_category = god_block.getCategory(current_category.getName());
+        
+        String email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("email");
+        ArrayList<String> ids = (ArrayList<String>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("passportids");
+        
+        if(seats.size() > 0)
+        {
+            for(seat s : seats)
+            {
+                if(god_category.getSeats().contains(s))
+                {
+                    god_category.getSeat(s.getId()).setOccupied(true);
+                }
+            }
+            
+            System.out.println(seats.size() + " seats on checkout");
+            
+            customer test = new customer(email, ids.toString());
+            transaction trans = new transaction(test, seats);
+            god.addTransaction(trans);
+            //email.versendeMail(test.getEmail(), "test", "blablubb");
+            
+            seats.clear();
+            return "Block";
+        }
+        else
+        {
+            // info box "keine plätze gekauft"
+            return "Block";
+        }
+    }
+    
+    public static String buySeats()
+    {
+        ArrayList<seat> seats = (ArrayList<seat>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("seats");
+        if(seats.size() > 0)
+        {
+            return "BuySeats";
+        }
+        else
+        {
+            return "Block";
+        }
+    }
+    
+    public static void addPassportId(String id)
+    {
+        String[] arrIds = id.split("Stop|\n");
+        log.printLog("addPassportId", "parameter: " + id);
+        
+        ArrayList<String> ids = (ArrayList<String>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("passportids");
+        ids.addAll(Arrays.asList(arrIds));
+        
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("passportids", ids);
+    }
+    
+    private static MethodExpression createMethodExpression(String expression, Class<?> returnType) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        MethodExpression me = context.getApplication().getExpressionFactory().createMethodExpression(context.getELContext(), expression, returnType, new Class[0]);
+        return me;
+    }
+    private static ValueExpression createValueExpression(String valueExpression, Class<?> valueType) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context.getApplication().getExpressionFactory().createValueExpression(context.getELContext(), valueExpression, valueType);
+    }
+    
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+    	<ui:composition template="/WEB-INF/template/Template.xhtml">          
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid columns="2" id="panelName" columnClasses="gridCol">
+                        Gewähltes Spiel: <h:outputText value="#{bean_data.activeGame.team1} vs. #{bean_data.activeGame.team2} am #{bean_data.activeGame.date}"></h:outputText>
+                        Gewähltes Stadion: <h:outputText value="#{bean_data.activeStadium.name}"></h:outputText>
+                        Gewählter Block: <h:outputText value="#{bean_data.activeBlock.name}"></h:outputText>
+                        Gewählte Kategorie: <h:outputText value="#{bean_data.activeCategory.name}"></h:outputText>
+                        Gewählte Sitzplätze: <h:outputText value="#{bean_data.selectedSeatsToString}"></h:outputText>
+                        
+                        <h:outputLabel id="lbPrename" value="Vorname: "></h:outputLabel>
+                        <h:inputText label="lbPrename" id="txPrename"></h:inputText>
+                        <h:outputLabel id="lbName" value="Nachname: "></h:outputLabel>
+                        <h:inputText label="lbName" id="txName"></h:inputText>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" columnClasses="gridCol" id="gridPassport" binding="#{bean_buyseats.passports}">
+                        <h:outputLabel></h:outputLabel>
+                        <h:commandButton value="Kostenpflichtig kaufen"></h:commandButton>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>   
+    	</ui:composition>
+    </h:body>
+</html>

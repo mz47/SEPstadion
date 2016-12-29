@@ -1,0 +1,52 @@
+
+package login;
+
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+
+@Named(value = "bean_auth")
+@Dependent
+public class bean_auth {
+
+    private String username;
+    private String password;
+
+    
+    public bean_auth() {
+        
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String usr) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", usr);
+        this.username = usr;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String pwd) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("password", pwd);
+        this.password = pwd;
+    }
+
+    public String login()
+    {
+        return auth.auth();
+    }
+    
+    public String redirect()
+    {
+        return auth.redirect();
+    }
+           
+    public String logout()
+    {
+        return auth.logout();
+    }
+}

@@ -1,0 +1,127 @@
+package dataStorage;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.jdom2.input.SAXBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+public class wrapper {
+
+    private static final ServletContext context = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+    private static final String GAME_PATH = context.getRealPath("/resources/xml/Spiel.xml");
+    private static final String STADIUM_PATH = context.getRealPath("/resources/xml/Stadion.xml");
+    
+    public static ArrayList<game> getGames()
+    {
+        try
+        {
+            File xml = new File(GAME_PATH);
+            
+            ArrayList<game> games = new ArrayList<>();
+            
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(xml);
+            
+            doc.getDocumentElement().normalize();
+           
+           NodeList list = doc.getElementsByTagName("Spiel");
+           
+            for(int i = 0; i < list.getLength(); i++)
+            {
+                Node node = list.item(i);
+                if(node.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Element e = (Element) node;
+
+                    game game = new game();
+                   game.setId(Integer.parseInt(e.getElementsByTagName("ID").item(0).getTextContent()));
+                   game.setStadiumId(Integer.parseInt(e.getElementsByTagName("StadionID").item(0).getTextContent()));
+                   game.setDate(e.getElementsByTagName("Termin").item(0).getTextContent());
+                   game.setPricing(Float.parseFloat(e.getElementsByTagName("Preismultiplikator").item(0).getTextContent()));
+                   game.setTeam1(e.getElementsByTagName("Mannschaft1").item(0).getTextContent());
+                   game.setTeam2(e.getElementsByTagName("Mannschaft2").item(0).getTextContent());
+                   game.setType(e.getElementsByTagName("Art").item(0).getTextContent());
+                   games.add(game);
+               }
+            }
+           return games;
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
+    }
+    
+    public static stadium getStadium(String stadiumID)
+    {
+        try
+        {
+            //stadium erstellen, liste der blöcke erstellen
+            stadium stadium = new stadium();
+            ArrayList<block> blocks = new ArrayList<>();
+            
+            //xml datei öffnen, document erstellen, root node auslesen
+            org.jdom2.Document doc = new SAXBuilder().build(STADIUM_PATH);
+            org.jdom2.Element xml_stadium = doc.getRootElement();
+            
+            //stadium properties füllen
+            stadium.setId(xml_stadium.getChildText("ID"));
+            stadium.setName(xml_stadium.getChildText("Name")); 
+            
+            //ArrayList für himmelrichtungen für for loop
+            ArrayList<String> dir = new ArrayList<>();
+            dir.add("NW");
+            dir.add("N");
+            dir.add("NO");
+            dir.add("O");
+            dir.add("SO");
+            dir.add("S");
+            dir.add("SW");
+            dir.add("W");
+            
+            //xml file iterieren; objekte instanzieren
+            for(String str : dir)
+            {
+                org.jdom2.Element xml_block = xml_stadium.getChild("Bloecke").getChild(str);
+                block block = new block(xml_block.getChild("Name").getText(), str, null, null, null);
+                
+                category cat_0 = new category();
+                cat_0.setName(xml_block.getChild("Vorne").getChild("Preiskategorie").getChildText("KategorieName"));
+                cat_0.setNumberOfSeats(Integer.parseInt(xml_block.getChild("Vorne").getChildText("AnzahlSitze")));
+                cat_0.setPrice(Double.parseDouble(xml_block.getChild("Vorne").getChild("Preiskategorie").getChildText("Grundpreis")));
+
+                category cat_1 = new category();
+                cat_1.setName(xml_block.getChild("Mitte").getChild("Preiskategorie").getChildText("KategorieName"));
+                cat_1.setNumberOfSeats(Integer.parseInt(xml_block.getChild("Mitte").getChildText("AnzahlSitze")));
+                cat_1.setPrice(Double.parseDouble(xml_block.getChild("Mitte").getChild("Preiskategorie").getChildText("Grundpreis")));
+
+                category cat_2 = new category();
+                cat_2.setName(xml_block.getChild("Hinten").getChild("Preiskategorie").getChildText("KategorieName"));
+                cat_2.setNumberOfSeats(Integer.parseInt(xml_block.getChild("Hinten").getChildText("AnzahlSitze")));
+                cat_2.setPrice(Double.parseDouble(xml_block.getChild("Hinten").getChild("Preiskategorie").getChildText("Grundpreis")));
+                
+                block.setCat_0(cat_0);
+                block.setCat_1(cat_1);
+                block.setCat_2(cat_2);
+                
+                blocks.add(block);
+            }
+            
+            stadium.setBlocks(blocks);
+            return stadium;
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
+    }
+}

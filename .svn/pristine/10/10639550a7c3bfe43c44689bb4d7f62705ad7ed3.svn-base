@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>SEPstadion CSS Stadium</title>
+        <style type="text/css">
+			#stadion {
+				background-color: #ccc;
+				z-index: 1;
+				width: 520px;
+				height: 520px;
+				margin-top: 50px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.block {
+				background-color: #999;
+				width: 120px;
+				height: 120px;
+				z-index: 2;
+				border: 1px solid #666;
+				margin-right: 50px;
+				margin-bottom: 50px;
+			}
+			.floating {
+				float: left;
+				display: block;
+			}
+			.kategorie {
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+			}
+			#kat-0 {
+				background-color: #fff;
+			}
+			#kat-1 {
+				background-color: #ddd;
+				top: 40px;
+			}
+			#kat-2 {
+				background-color: #bbb;
+				top: 40px;
+			}
+			.court {
+				background-color: #060;
+				line-height: 120px;
+				text-align: center;
+			}
+			.clear {
+				clear: left;
+			}
+		</style>
+    </head>
+    <body>
+    	<div id="stadion">
+        	<div id="block-nw" class="block floating" style="-webkit-transform: rotate(315deg);">
+            	<div id="kat-0" class="kategorie"></div>
+                <div id="kat-1" class="kategorie"></div>
+                <div id="kat-2" class="kategorie"></div>
+            </div>
+            <div id="block-n" class="block floating">
+            	<div id="kat-0" class="kategorie">Hinten - Loge</div>
+                <div id="kat-1" class="kategorie">Mitte - Comfort</div>
+                <div id="kat-2" class="kategorie">Vorne - Holzklasse</div>
+            </div>
+            <div id="block-no" class="block floating" style="-webkit-transform: rotate(45deg);">
+            	<div id="kat-0" class="kategorie"></div>
+                <div id="kat-1" class="kategorie"></div>
+                <div id="kat-2" class="kategorie"></div>
+            </div>
+            <div class="clear"></div> 
+            <div id="block-w" class="block floating" style="-webkit-transform: rotate(270deg);">
+            	<div id="kat-0" class="kategorie"></div>
+                <div id="kat-1" class="kategorie"></div>
+                <div id="kat-2" class="kategorie"></div>
+            </div>
+            <div id="court" class="block floating court">Spielfeld</div>
+            <div id="block-o" class="block floating" style="-webkit-transform: rotate(90deg);">
+            	<div id="kat-0" class="kategorie"></div>
+                <div id="kat-1" class="kategorie"></div>
+                <div id="kat-2" class="kategorie"></div>
+            </div>
+            <div class="clear"></div>
+            <div id="block-sw" class="block floating" style="-webkit-transform: rotate(225deg);">
+            	<div id="kat-0" class="kategorie"></div>
+                <div id="kat-1" class="kategorie"></div>
+                <div id="kat-2" class="kategorie"></div>
+            </div>
+            <div id="block-s" class="block floating" style="-webkit-transform: rotate(180deg);">
+            	<div id="kat-0" class="kategorie"></div>
+                <div id="kat-1" class="kategorie"></div>
+                <div id="kat-2" class="kategorie"></div>
+            </div>
+            <div id="block-so" class="block floating" style="-webkit-transform: rotate(135deg);">
+            	<div id="kat-0" class="kategorie"></div>
+                <div id="kat-1" class="kategorie"></div>
+                <div id="kat-2" class="kategorie"></div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+
+package drawing;
+
+import dataStorage.stadium;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+
+@Named(value = "bean_stadium")
+@Dependent
+public class bean_stadium {
+    
+    private String position;
+    
+    public bean_stadium() {
+    }
+    
+    public String getPosition()
+    {
+        stadium stadium = (stadium) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("stadium");
+        return stadium.getName();
+    }
+    
+}

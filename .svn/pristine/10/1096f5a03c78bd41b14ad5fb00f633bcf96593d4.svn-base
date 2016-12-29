@@ -1,0 +1,66 @@
+
+package dataStorage;
+
+import java.util.ArrayList;
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
+
+@Named(value = "category")
+@Dependent
+public class category {
+
+    private String name;
+    private int numberOfSeats;
+    private double price; 
+    private ArrayList<seat> seats;
+    
+    public category() {
+        
+    }
+    
+    public category(String name, int numberOfSeats, double price)
+    {
+        this.name = name;
+        this.numberOfSeats = numberOfSeats;
+        this.price = price;
+        seats = new ArrayList<>();
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(ArrayList<seat> seats) {
+        this.seats = seats;
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int NumberOfSeats) {
+        this.numberOfSeats = NumberOfSeats;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    public seat getSeat(int index)
+    {
+        return this.seats.get(index);
+    }
+    
+}

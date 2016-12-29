@@ -1,0 +1,57 @@
+
+package drawing;
+
+import dataStorage.log;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+
+@Named(value = "bean_bewerbung")
+@Dependent
+public class bean_bewerbung {
+
+    private int numberOfSeats;
+    private String email;
+    private String passport;
+    
+    public bean_bewerbung() {
+        this.numberOfSeats = 1;
+        this.email = "mpnw47@gmail.com";
+        this.passport = "1234567890";
+    }
+    
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("numberOfSeats", numberOfSeats);
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("numberOfSeats", email);
+        log.printLog("bean_bewerbung", "email: " + email);
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("numberOfSeats", passport);
+        log.printLog("bean_bewerbung", "passport: " + passport);
+    }
+    
+    public String bewerben()
+    {
+        return cup.bewerben();
+    }
+
+}

@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package buying;
+
+/**
+ *
+ * @author Manuel
+ */
+public class Stornierung {
+    
+    public Boolean setStornierungsdaten() //nimmt Daten von Formular, schreibt in DB
+    {
+        
+        return false;
+    }
+    
+    public Boolean pruefeStornierungsdaten(String Mailadresse, String Name, String Vorname, String Passnr, String Spiel, String Kategorie, String Platznr) //prüft auf Eingabefehler + Richtigkeit
+    {
+        
+        return false;
+    }
+    
+    public Boolean stornierePlatz(String Block, String Platznr) //setzt Platzstatus auf frei!
+    {
+        
+        return false;
+    }
+    
+    public Boolean updateKundenstatus() //aktualisiert/pflegt Kundenstatus
+    {
+        
+        return false;
+    }
+    
+}

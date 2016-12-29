@@ -1,0 +1,27 @@
+
+package drawing;
+
+import javax.enterprise.context.Dependent;
+import javax.faces.component.html.HtmlForm;
+import javax.faces.component.html.HtmlPanelGrid;
+import javax.inject.Named;
+
+@Named(value = "bean_buyseats")
+@Dependent
+public class bean_buyseats {
+
+    private HtmlPanelGrid passports;
+    
+    public bean_buyseats() {
+    }
+    
+    public HtmlPanelGrid getPassports() {
+        passports = cup.drawPassportInput();
+        return passports;
+    }
+
+    public void setPassports(HtmlPanelGrid passports) {
+        this.passports = passports;
+    }
+    
+}

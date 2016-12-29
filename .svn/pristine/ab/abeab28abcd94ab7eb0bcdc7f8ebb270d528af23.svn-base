@@ -1,0 +1,21 @@
+
+package dataStorage;
+
+import java.sql.*;
+
+public class sqlite
+{
+    public String connect()
+    {
+        try
+        {
+            Class.forName("org.sqlite.JDBC");
+            Connection con = DriverManager.getConnection("jdbc:sqlite:data.db");
+            return "connected";
+        }
+        catch(Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+}

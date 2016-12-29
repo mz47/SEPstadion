@@ -1,0 +1,29 @@
+
+package drawing;
+
+import javax.enterprise.context.Dependent;
+import javax.faces.component.html.HtmlForm;
+import javax.inject.Named;
+
+@Named(value = "bean_block")
+@Dependent
+public class bean_block {
+
+    private HtmlForm seats;
+
+    public bean_block() {
+        
+    }
+    
+    public HtmlForm getSeats() {
+        
+        //return cup.drawSeats();
+        return null;
+    }
+    
+    public void setSeats(HtmlForm seats)
+    {
+        this.seats = seats;
+    }
+
+}

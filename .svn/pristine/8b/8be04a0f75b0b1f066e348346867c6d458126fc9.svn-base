@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <body>
+	    <ui:composition>
+                <div id="title" class="shadow"><a href="index.xhtml">SEPstadion - Gruppe L</a></div>
+                <div id="title-debug">
+                    <h:form>
+                        <h:commandLink action="#{bean_cup.startUp}" value="Load objects"></h:commandLink><br />
+                        <h:commandLink action="Transactions" value="Trans overview"></h:commandLink><br /><br />
+                        GOD Games Size: <h:outputText value="#{bean_god.gameSize}"></h:outputText><br />
+                        GOD Stadium Loaded: <h:outputText value="#{bean_god.stadiumLoaded}"></h:outputText><br />
+                        GOD Stadiums Size: <h:outputText value="#{bean_god.stadiumsSize}"></h:outputText><br />
+                        GOD No Of Occupied Seats: <h:outputText value="#{bean_god.numberOfOccupiedSeats}"></h:outputText><br />
+                        GOD No Of Transactions: <h:outputText value="#{bean_god.numberOfTransactions}"></h:outputText><br /><br />
+                        Selected Game: <h:outputText value="#{bean_data.activeGame.team1} vs. #{bean_data.activeGame.team2}"></h:outputText><br />
+                        Selected Stadium: <h:outputText value="#{bean_data.activeStadium.name} (#{bean_data.activeStadium.id})"></h:outputText><br />
+                        Selected Block: <h:outputText value="#{bean_data.activeBlock.name}"></h:outputText><br />
+                        Selected Category: <h:outputText value="#{bean_data.activeCategory.name}"></h:outputText><br />
+                        Selected Seats Size: <h:outputText value="#{bean_data.selectedSeatsSize}" escape="false"></h:outputText><br />
+                        Selected Seats: <h:outputText value="#{bean_data.selectedSeatsToString}" escape="false"></h:outputText><br /><br />
+                        Checkout Email: <h:outputText value="#{bean_data.email}" escape="false"></h:outputText><br />
+                        Checkout No Of PassportIDs: <h:outputText value="#{bean_data.numberOfPassportIds}" escape="false"></h:outputText><br />
+                    </h:form>
+                </div>
+	    </ui:composition>
+    </body>
+</html>

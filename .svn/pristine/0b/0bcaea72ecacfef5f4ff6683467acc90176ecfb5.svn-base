@@ -1,0 +1,92 @@
+
+package drawing;
+
+import dataStorage.block;
+import dataStorage.game;
+import dataStorage.stadium;
+import dataStorage.wrapper;
+import java.util.ArrayList;
+import java.util.List;
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
+
+@Named(value = "cup")
+@Dependent
+public class cup {
+
+    public cup()
+    {
+        
+    }
+    
+    //Main entry
+    public String GetAllGames()
+    {
+        try
+        {
+            StringBuilder sb = new StringBuilder();
+            List<game> games = wrapper.getGames();
+            if(games.isEmpty() == false)
+            {
+                for (game game : games)
+                {
+                    sb.append(game.getId());
+                    sb.append(": ");
+                    sb.append(game.getTeam1());
+                    sb.append(" vs. ");
+                    sb.append(game.getTeam2());
+                    sb.append("<br />");
+                }
+                return sb.toString();
+            }
+            else
+            {
+                return "games list empty";
+            }
+        }
+        catch(Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+    
+    public String getStadium()
+    {
+        //parameter!
+        StringBuilder sb = new StringBuilder();
+        stadium stadium = wrapper.getStadium("");
+        ArrayList<block> blocks = stadium.getBlocks();
+        for(int i = 0; i < blocks.size(); i++)
+        {
+            sb.append("Block: ");
+            sb.append(blocks.get(i).getName());
+            sb.append("<br />");
+            sb.append(blocks.get(i).getCat_0().getName());
+            sb.append(": ");
+            sb.append(blocks.get(i).getCat_0().getNumberOfSeats());
+            sb.append(" Sitzplätze zu je ");
+            sb.append(blocks.get(i).getCat_0().getPrice());
+            sb.append("<br />");
+            sb.append(blocks.get(i).getCat_1().getName());
+            sb.append(": ");
+            sb.append(blocks.get(i).getCat_1().getNumberOfSeats());
+            sb.append(" Sitzplätze zu je ");
+            sb.append(blocks.get(i).getCat_1().getPrice());
+            sb.append("<br />");
+            sb.append(blocks.get(i).getCat_2().getName());
+            sb.append(": ");
+            sb.append(blocks.get(i).getCat_2().getNumberOfSeats());
+            sb.append(" Sitzplätze zu je ");
+            sb.append(blocks.get(i).getCat_2().getPrice());
+            sb.append("<br />");
+            sb.append("<br />");
+        }
+        return sb.toString();
+    }
+    
+    public String viewBlock(String block, String category)
+    {
+        
+        return "Block.xhtml";
+    }
+}

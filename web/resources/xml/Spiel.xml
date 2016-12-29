@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Spiele xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="SpielXMLSchema.xsd">
+    <Spiel>
+        <Termin>2014-06-12</Termin>
+        <ID>01</ID>
+        <Art>Gruppenphase</Art>
+        <Mannschaft1>Italien</Mannschaft1>
+        <Mannschaft2>Brasilien</Mannschaft2>
+        <StadionID>0001</StadionID>
+        <Preismultiplikator>2</Preismultiplikator>
+    </Spiel>
+    <Spiel>
+        <Termin>2014-06-13</Termin>
+        <ID>02</ID>
+        <Art>KO-Phase</Art>
+        <Mannschaft1>Deutschland</Mannschaft1>
+        <Mannschaft2>Spanien</Mannschaft2>
+        <StadionID>0002</StadionID>
+        <Preismultiplikator>3</Preismultiplikator>
+     </Spiel>
+</Spiele>

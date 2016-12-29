@@ -1,0 +1,28 @@
+
+package inputs;
+
+import java.util.Map;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+
+@Named(value = "navHandler")
+@Dependent
+public class NavHandler
+{
+
+    public NavHandler()
+    {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+        
+        int gameID = Integer.parseInt(params.get("gameID"));
+        int staduimID = Integer.parseInt(params.get("stadiumID"));
+    }
+    
+    public String ViewStadium(int gameID, int stadiumID)
+    {
+        return "Stadion.xhtml";
+    }
+    
+}

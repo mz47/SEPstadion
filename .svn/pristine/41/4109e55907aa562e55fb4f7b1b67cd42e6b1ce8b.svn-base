@@ -1,0 +1,81 @@
+
+package dataStorage;
+
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
+
+@Named(value = "block")
+@Dependent
+public class block {
+    
+    private String name;
+    private String pos;
+    private category cat_0; //loge
+    private category cat_1; //komfort
+    private category cat_2; //holzklasse
+    
+    public block() {
+        //TODO
+    }
+    
+    public block(String name, String pos, category cat_0, category cat_1, category cat_2)
+    {
+        this.name = name;
+        this.pos = pos;
+        this.cat_0 = cat_0;
+        this.cat_1 = cat_1;
+        this.cat_2 = cat_2;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
+    public void setPos(String pos) {
+        this.pos = pos;
+    }
+
+    public category getCat_0() {
+        return cat_0;
+    }
+
+    public void setCat_0(category cat_0) {
+        this.cat_0 = cat_0;
+    }
+
+    public category getCat_1() {
+        return cat_1;
+    }
+
+    public void setCat_1(category cat_1) {
+        this.cat_1 = cat_1;
+    }
+
+    public category getCat_2() {
+        return cat_2;
+    }
+
+    public void setCat_2(category cat_2) {
+        this.cat_2 = cat_2;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public category getCategory(int index)
+    {
+        switch(index)
+        {
+            case 0: return this.cat_0;
+            case 1: return this.cat_1;
+            case 2: return this.cat_2;
+            default: return null;
+        }
+    }
+
+}

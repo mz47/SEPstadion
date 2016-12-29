@@ -1,0 +1,11 @@
+package modultest;
+
+import email.email;
+
+public class BenachrichtigungTest {
+
+    public static void main(String[] args) {
+        email.versendeMail("sep.stadion@web.de", "Testmail", "Das ist der Text der Testmail.");
+        System.out.println("Test beendet.");
+    }
+}

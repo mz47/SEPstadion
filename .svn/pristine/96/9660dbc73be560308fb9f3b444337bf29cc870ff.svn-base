@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+    	<ui:composition template="/WEB-INF/template/Template.xhtml">          
+            <ui:define name="content">
+                <h4>Noch %deadline% bis zum Ablauf der Bewerbungsfrist.</h4>
+                <h:form>
+                    <h:panelGrid columns="3" columnClasses="gridCol" rowClasses="gridRow">
+                        <h:outputLabel id="lbSelection" value="Anzahl Sitzplätze:"></h:outputLabel>
+                        <h:selectOneListbox id="selection" value="#{bean_bewerbung.numberOfSeats}" label="lbSelection" size="1">
+                            <f:selectItem itemValue="1" itemLabel="1" />
+                            <f:selectItem itemValue="2" itemLabel="2" />
+                            <f:selectItem itemValue="3" itemLabel="3" />
+                            <f:selectItem itemValue="4" itemLabel="4" />
+                            <f:selectItem itemValue="5" itemLabel="5" />
+                            <f:selectItem itemValue="6" itemLabel="6" />
+                            <f:selectItem itemValue="7" itemLabel="7" />
+                            <f:selectItem itemValue="8" itemLabel="8" />
+                            <f:selectItem itemValue="9" itemLabel="9" />
+                            <f:selectItem itemValue="10" itemLabel="10" />
+                        </h:selectOneListbox>
+                        <h:message for="selection" styleClass="error"></h:message>
+                        <h:outputLabel id="lbEmail" value="Email-Adresse:"></h:outputLabel>
+                        <h:inputText id="txEmail" value="#{bean_bewerbung.email}" required="true" requiredMessage="Bitte Email-Adresse angeben.">
+                            <f:validateLength minimum="5" maximum="50"></f:validateLength>
+                            <f:validateRequired></f:validateRequired>
+                        </h:inputText>
+                        <h:message for="txEmail" styleClass="error"></h:message>
+                        Pass-IDs:<br />
+                        <div style="font-size: 12px">Bitte eine Pass-ID pro Zeile</div>
+                        <h:inputTextarea id="txPassport" value="#{bean_bewerbung.passport}" required="true" requiredMessage="Bitte Pass-ID(s) angeben.">
+                            <f:validateLength minimum="3" maximum="50"></f:validateLength>
+                            <f:validateRequired></f:validateRequired>
+                        </h:inputTextarea>
+                        <h:message for="txPassport" styleClass="error"></h:message>
+                        <h:outputText />
+                        <h:commandButton value="Bewerben"></h:commandButton>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>   
+    	</ui:composition>
+    </h:body>
+</html>

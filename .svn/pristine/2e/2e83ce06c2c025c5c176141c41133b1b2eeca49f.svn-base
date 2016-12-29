@@ -1,0 +1,65 @@
+
+package buying;
+
+import dataStorage.seat;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class transaction implements Serializable {
+    
+    private long id;
+    private customer customer;
+    private ArrayList<seat> seats;
+    private Date date;
+    
+    public transaction()
+    {
+        
+    }
+    
+    public transaction(customer customer, ArrayList<seat> seats, Date date)
+    {
+        this.id = System.currentTimeMillis();
+        this.customer = customer;
+        this.seats = seats;
+        this.date = date;
+    }
+    
+    public long getId()
+    {
+        return this.id;
+    }
+    
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+    
+    public customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(customer customer) {
+        this.customer = customer;
+    }
+
+    public ArrayList<seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(ArrayList<seat> seats) {
+        this.seats = seats;
+    }
+    
+    public Date getDate()
+    {
+        return this.date;
+    }
+    
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+
+}

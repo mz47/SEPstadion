@@ -1,0 +1,84 @@
+
+package drawing;
+
+import dataStorage.block;
+import dataStorage.category;
+import dataStorage.data;
+import dataStorage.game;
+import dataStorage.seat;
+import dataStorage.stadium;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+
+
+@Named(value = "bean_data")
+@Dependent
+public class bean_data {
+    
+    private game activeGame;
+    private stadium activeStadium;
+    private block activeBlock;
+    private category activeCategory;
+    private seat activeSeat;
+    private int gamesSize;
+    private boolean stadiumLoaded;
+    private int numberOfOccupiedSeats;
+    private String selectedSeatsToString;
+    
+    public bean_data() {
+        //TODO
+    }
+
+    public game getActiveGame() {
+        return data.getActiveGame();
+    }
+
+    public void setActiveGame(game activeGame) {
+        data.setActiveGame(activeGame);
+    }
+
+    public stadium getActiveStadium() {
+        return data.getActiveStadium();
+    }
+
+    public void setActiveStadium(stadium activeStadium) {
+        data.setActiveStadium(activeStadium);
+    }
+
+    public block getActiveBlock() {
+        return data.getActiveBlock();
+    }
+
+    public void setActiveBlock(block activeBlock) {
+        data.setActiveBlock(activeBlock);
+    }
+
+    public category getActiveCategory() {
+        return data.getActiveCategory();
+    }
+
+    public void setActiveCategory(category activeCategory) {
+        data.setActiveCategory(activeCategory);
+    }
+    
+    public int getGamesSize()
+    {
+        return data.getGamesSize();
+    }
+    
+    public boolean getStadiumLoaded()
+    {
+        return data.getStadiumLoaded();
+    }
+    
+    public int getNumberOfOccupiedSeats()
+    {
+        return data.getNumberOfOccupiedSeats();
+    }
+    
+    public String getSelectedSeatsToString()
+    {
+        return data.getSelectedSeatsToString();
+    }
+      
+}

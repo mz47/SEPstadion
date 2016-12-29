@@ -1,0 +1,43 @@
+
+package dataStorage;
+
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+
+@Named(value = "bean_block")
+@Dependent
+public class bean_block {
+
+    private stadium stadium;
+    private block block;
+    private category category;
+    private String blockPosition;
+    private int categoryIndex;
+    
+    public bean_block() {
+        this.blockPosition = (String) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("blockPosition");
+        this.categoryIndex = (int) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("categoryIndex");
+        this.stadium = (stadium) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("stadium");
+        this.block = stadium.getBlock(blockPosition);
+        this.category = block.getCategory(categoryIndex);
+    }
+
+    public stadium getStadium() {
+        return (stadium) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("stadium");
+    }
+    
+    public block getBlock() {
+        return this.block;
+    }
+
+    public category getCategory() {
+        return this.category;
+    }
+    
+    public String print()
+    {
+        return "stadium: " + stadium.getName() + "; blockpos: " + blockPosition + "; catindex: " + categoryIndex + "";
+    }
+ 
+}

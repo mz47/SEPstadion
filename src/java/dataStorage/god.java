@@ -1,0 +1,496 @@
+
+package dataStorage;
+
+import buying.bewerbung;
+import buying.customer;
+import buying.transaction;
+import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import login.auth;
+
+public abstract class god {
+
+    private static ArrayList<game> games;
+    private static ArrayList<stadium> stadiums;
+    private static ArrayList<seat> seats;
+    private static ArrayList<transaction> transactions;
+    private static ArrayList<bewerbung> bewerbungen;
+    
+    public static ArrayList<game> getGames() {
+        return games;
+    }
+
+    public static void setGames(ArrayList<game> games) {
+        god.games = games;
+    }
+
+    public static ArrayList<stadium> getStadiums() {
+        return stadiums;
+    }
+
+    public static void setStadiums(ArrayList<stadium> stadiums) {
+        god.stadiums = stadiums;
+    }
+    
+    public static ArrayList<seat> getSeats() {
+        return seats;
+    }
+
+    public static void setSeats(ArrayList<seat> seats) {
+        god.seats = seats;
+    }
+    
+    public static boolean getStadiumLoaded()
+    {
+        if(stadiums != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public static ArrayList<transaction> getTransactions()
+    {
+        return god.transactions;
+    }
+    
+    public static void setTransactions(ArrayList<transaction> transactions)
+    {
+        god.transactions = transactions;
+    }
+    
+    public static int getNumberOfOccupiedSeats()
+    {
+        try
+        {
+            if(stadiums != null)
+            {
+                if(stadiums.size() > 0)
+                {
+                    int counter = 0;
+                    for(stadium s : stadiums)
+                    {
+                        for(block b : s.getBlocks())
+                        {
+                            for(seat s_0 : b.getCat_0().getSeats())
+                            {
+                                if(s_0.isOccupied())
+                                {
+                                    counter++;
+                                }
+                            }
+                            for(seat s_1 : b.getCat_1().getSeats())
+                            {
+                                if(s_1.isOccupied())
+                                {
+                                    counter++;
+                                }
+                            }
+                            for(seat s_2 : b.getCat_2().getSeats())
+                            {
+                                if(s_2.isOccupied())
+                                {
+                                    counter++;
+                                }
+                            }
+                        }
+                    }
+                    return counter;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return -1;
+        }
+    }
+    
+    public static int getGameSize()
+    {
+        if(games != null)
+        {
+            return games.size();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    public static int getStadiumsSize()
+    {
+        if(stadiums != null)
+        {
+            return stadiums.size();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    public static void addSeat(seat s)
+    {
+        seats.add(s);
+    }
+    
+    public static void addTransaction(transaction t)
+    {
+        if(t != null)
+        {
+            transactions.add(t);
+        }
+    }
+    
+    public static String getAllTransactionsToString()
+    {
+        try
+        {
+            if(auth.isAuth() && transactions != null)
+            {
+                if(transactions.size() > 0)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyy HH:mm:ss");
+
+                    for(transaction t : transactions)
+                    {
+                        stadium st = god.getStadiums().get(t.getStadionId() - 1);
+                        sb.append("<div style='font-size:12px'>");
+                        sb.append(dateFormat.format(t.getDate()));
+                        sb.append(" ");
+                        sb.append(st.getName());
+                        sb.append(" ");
+                        sb.append(st.getBlock(t.getBlockPosition()).getName());
+                        //sb.append("block-name");
+                        sb.append(" ");
+                        sb.append(st.getBlock(t.getBlockPosition()).getCategory(t.getCategoryIndex()).getName());
+                        //sb.append("category-name");
+                        sb.append(" ");
+                        sb.append(t.getCustomer().getEmail());
+                        sb.append(" ");
+                        sb.append(t.getCustomer().getPassportId());
+                        sb.append(" ");
+                        if(t.getSeats().size() > 0)
+                        {
+                            for(seat s : t.getSeats())
+                            {
+                                sb.append("Platz ");
+                                sb.append(s.getId());
+                                sb.append(", ");
+                            }
+                        }
+                        sb.append(" storniert=");
+                        sb.append(t.isCancelled());
+                        sb.append(" <a href='http://");
+                        sb.append(god.getIp());
+                        sb.append(":8080/SEPstadion/faces/Stornierung.xhtml?rechnungsnummer=");
+                        sb.append(t.getId());
+                        sb.append("'>Stornieren</a>");
+                        sb.append("</div>");
+                    }
+
+                    return sb.toString();
+                }
+                else
+                {
+                    return "transactions empty";
+                }
+            }
+            else
+            {
+                return "no transactions object";
+            }
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return "Fehler";
+        }
+    }
+    
+    public static void setOccupied(seat s, boolean occupied)
+    {
+        for(stadium st : god.getStadiums())
+        {
+            for(block b : st.getBlocks())
+            {
+                for(seat se : b.getCat_0().getSeats())
+                {
+                    if(se.equals(s))
+                    {
+                        se.setOccupied(occupied);
+                        break;
+                    }
+                }
+                for(seat se : b.getCat_1().getSeats())
+                {
+                    if(se.equals(s))
+                    {
+                        se.setOccupied(occupied);
+                        break;
+                    }
+                }
+                for(seat se : b.getCat_2().getSeats())
+                {
+                    if(se.equals(s))
+                    {
+                        se.setOccupied(occupied);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    public static ArrayList<bewerbung> getBewerbungen()
+    {
+        return god.bewerbungen;
+    }
+    public static void setBewerbungen(ArrayList<bewerbung> bewerbungen)
+    {
+        god.bewerbungen = bewerbungen;
+    }
+    public static void addBewerbung(bewerbung bewerbung)
+    {
+        if(bewerbung != null)
+        {
+            god.bewerbungen.add(bewerbung);
+        }
+    }
+    public static int getNumberOfBewerbungen()
+    {
+        if(god.bewerbungen == null)
+        {
+            return -1;
+        }
+        else
+        {
+            return god.bewerbungen.size();
+        }
+    }
+    public static String getAllBewerbungenToString()
+    {
+        try
+        {
+            if(auth.isAuth() && god.bewerbungen != null)
+            {
+                if(god.bewerbungen.size() > 0)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyy HH:mm:ss");
+
+                    for(bewerbung t : god.bewerbungen)
+                    {
+                        sb.append("<div style='font-size:12px'>");
+                        sb.append(dateFormat.format(t.getDate()));
+                        sb.append(" ");
+                        sb.append(t.getId());
+                        sb.append(" ");
+                        sb.append(t.getCustomer().getEmail());
+                        sb.append(" ");
+                        sb.append(god.getStadiums().get(t.getStadionId() - 1).getName());
+                        sb.append(" ");
+                        sb.append(god.getStadiums().get(t.getStadionId() - 1).getBlock(t.getBlockPosition()).getName());
+                        sb.append(" ");
+                        sb.append(t.getNumberOfseats());
+                        sb.append(" Plätze");
+                        sb.append(" accepted=");
+                        sb.append(t.isAccepted());
+                        sb.append("</div>");
+                    }
+
+                    return sb.toString();
+                }
+                else
+                {
+                    return "object bewerbungen is empty";
+                }
+            }
+            else
+            {
+                return "object bewerbungen is null";
+            }
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return "Fehler.";
+        }
+    }
+    public static int getNumberOfFreeSeats(int stadionId, String blockPos, String catName)
+    {
+        try
+        {
+            int counter = 0;
+            stadium s = god.getStadiums().get(stadionId - 1);
+            block b = s.getBlock(blockPos);
+            category c = b.getCategory(catName);
+            for(seat se : c.getSeats())
+            {
+                if(se.isOccupied())
+                {
+                    counter++;
+                }
+            }
+            return counter;
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return -1;
+        }
+    }
+    public static int getCustomerCategory(customer c){
+        int category=0;
+        String[] parts = c.getPassportId().split("\n"); //splits Ids in parts array
+        boolean found;
+            for (int i=0; i<parts.length; i++){
+                found=false;
+                for (int j=0; i<god.getTransactions().size(); j++){
+                    if (god.getTransactions().get(j).getCustomer().getPassportId().contains(parts[i])) {
+                    found=true;
+                }
+                if (found) category++;                    
+                }   
+            }
+        return category;
+    }  
+    public static void toggleGameType()
+    {
+        for(game g : god.games)
+        {
+            if(g.getType().equals("Gruppenphase") == false)
+            {
+                g.setType("Gruppenphase");
+            }
+        }
+    }
+    
+    public static String getIp()
+    {
+        try
+        {
+            return InetAddress.getLocalHost().getHostAddress();
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return "IP nicht verfügbar.";
+        }
+    }
+    
+    public static boolean hasSeen(String id)
+    {
+        try
+        {
+            boolean success = false;
+            for(transaction t : getTransactions())
+            {
+                if(t.getCustomer().getIds().contains(id))
+                {
+                    return true;
+                }
+            }
+            return success;
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return false;
+        }
+    }
+    public static boolean hasSeen(ArrayList<String> ids)
+    {
+        try
+        {
+            boolean success = false;
+            for(bewerbung b : getBewerbungen())
+            {
+                for(String s : ids)
+                {
+                    if(b.getCustomer().getIds().contains(s))
+                    {
+                        return true;
+                    }
+                } 
+            }
+            return success;
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return false;
+        }
+    }
+    
+    public static ArrayList<bewerbung> getBewerbungenHasSeen()
+    {
+        try
+        {
+            ArrayList<bewerbung> arr = new ArrayList<>();
+            for(bewerbung b : god.getBewerbungen())
+            {
+                boolean done = false;
+                for(String id : b.getCustomer().getIds())
+                {
+                    if(god.hasSeen(id) == true)
+                    {
+                        done = true;
+                    }
+                }
+                if(done)
+                {
+                    arr.add(b);
+                }
+            }
+            return arr;
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return null;
+        }
+    }
+    public static ArrayList<bewerbung> getBewerbungenHasNotSeen()
+    {
+        try
+        {
+            ArrayList<bewerbung> arr = new ArrayList<>();
+            for(bewerbung b : god.getBewerbungen())
+            {
+                boolean done = false;
+                for(String id : b.getCustomer().getIds())
+                {
+                    if(god.hasSeen(id) == false)
+                    {
+                        done = true;
+                    }
+                }
+                if(done)
+                {
+                    arr.add(b);
+                }
+            }
+            return arr;
+        }
+        catch(Exception ex)
+        {
+            log.printException(ex);
+            return null;
+        }
+    }
+    
+}

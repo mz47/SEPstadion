@@ -1,0 +1,164 @@
+
+package dataStorage;
+
+import buying.transaction;
+import java.util.ArrayList;
+
+public abstract class god {
+
+    private static ArrayList<game> games;
+    //TODO stadium objekt, da nur ein stadium vorhanden. eventuell dynamisch?
+    private static stadium stadium;
+    private static ArrayList<seat> seats;
+    private static ArrayList<transaction> transactions;
+    
+    public static ArrayList<game> getGames() {
+        return games;
+    }
+
+    public static void setGames(ArrayList<game> games) {
+        god.games = games;
+    }
+
+    public static stadium getStadium() {
+        return stadium;
+    }
+
+    public static void setStadium(stadium stadium) {
+        god.stadium = stadium;
+    }
+    
+    public static ArrayList<seat> getSeats() {
+        return seats;
+    }
+
+    public static void setSeats(ArrayList<seat> seats) {
+        god.seats = seats;
+    }
+    
+    public static boolean getStadiumLoaded()
+    {
+        if(stadium != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public static ArrayList<transaction> getTransactions()
+    {
+        return god.transactions;
+    }
+    
+    public static void setTransactions(ArrayList<transaction> transactions)
+    {
+        god.transactions = transactions;
+    }
+    
+    public static int getNumberOfOccupiedSeats()
+    {
+        if(stadium != null)
+        {
+            int counter = 0;
+            for(block b : stadium.getBlocks())
+            {
+                for(seat s_0 : b.getCat_0().getSeats())
+                {
+                    if(s_0.isOccupied())
+                    {
+                        counter++;
+                    }
+                }
+                for(seat s_1 : b.getCat_1().getSeats())
+                {
+                    if(s_1.isOccupied())
+                    {
+                        counter++;
+                    }
+                }
+                for(seat s_2 : b.getCat_2().getSeats())
+                {
+                    if(s_2.isOccupied())
+                    {
+                        counter++;
+                    }
+                }
+            }
+            return counter;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    public static int getGameSize()
+    {
+        if(games != null)
+        {
+            return games.size();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    public static void addSeat(seat s)
+    {
+        seats.add(s);
+    }
+    
+    public static void addTransaction(transaction t)
+    {
+        if(t != null)
+        {
+            transactions.add(t);
+            System.out.println(t.getSeats().size() + " seats in addTransaction");
+        }
+    }
+    
+    public static String getAllTransactionsToString()
+    {
+        if(transactions != null)
+        {
+            if(transactions.size() > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                for(transaction t : transactions)
+                {
+                    sb.append(t.getDate());
+                    sb.append(" | ");
+                    sb.append(t.getId());
+                    sb.append(" | ");
+                    sb.append(t.getCustomer().getEmail());
+                    sb.append(" | ");
+                    sb.append(t.getCustomer().getPassportId());
+                    sb.append(" | ");
+                    for(seat s : t.getSeats())
+                    {
+                        sb.append("#");
+                        sb.append(s.getId());
+                        sb.append(", ");
+                    }
+                    
+                    sb.append("<br />");
+                }
+
+                return sb.toString();
+            }
+            else
+            {
+                return "transactions empty";
+            }
+        }
+        else
+        {
+            return "no transactions object";
+        }
+    }
+    
+}

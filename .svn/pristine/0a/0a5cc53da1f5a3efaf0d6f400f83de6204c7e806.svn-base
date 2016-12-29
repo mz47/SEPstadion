@@ -1,0 +1,55 @@
+package drawing;
+
+import java.util.Map;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+
+@Named(value = "stadion")
+@Dependent
+
+public class Stadion
+{
+    @ManagedProperty(value = "#{param.SpielId")
+    private String SpielId;
+    
+    @ManagedProperty(value = "#{param.StadionId")
+    private String StadionId;
+
+    public String getStadionId() {
+        return StadionId;
+    }
+
+    public void setStadionId(String StadionId) {
+        this.StadionId = StadionId;
+    }
+
+    public String getSpielId() {
+        return SpielId;
+    }
+
+    public void setSpielId(String SpielId) {
+        this.SpielId = SpielId;
+    }
+    
+    private String stadion;
+    public Stadion() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+        
+        this.SpielId = params.get("SpielId");
+        this.StadionId = params.get("StadionId");
+        
+        Draw();
+    }
+    public String getStadion() {
+        return this.stadion;
+    }
+    public void Draw()
+    {
+        XmlWrapper xml = new XmlWrapper();
+        stadion = xml.GetSpielById("C:\\Spiel.xml", this.SpielId);
+    }
+    
+}

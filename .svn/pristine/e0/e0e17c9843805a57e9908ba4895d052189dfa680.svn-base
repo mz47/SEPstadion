@@ -1,0 +1,43 @@
+
+package drawing;
+
+import dataStorage.god;
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
+
+@Named(value = "bean_god")
+@Dependent
+public class bean_god {
+    
+    private int numberOfOccupiedSeats;
+    private int gameSize;
+    private boolean stadiumLoaded;
+    
+    public bean_god() {
+    }
+
+    public int getGameSize() {
+        return god.getGameSize();
+    }
+
+    public void setGameSize(int gameSize) {
+        this.gameSize = gameSize;
+    }
+    
+    public int getNumberOfOccupiedSeats() {
+        return god.getNumberOfOccupiedSeats();
+    }
+
+    public void setNumberOfOccupiedSeats(int numberOfOccupiedSeats) {
+        this.numberOfOccupiedSeats = numberOfOccupiedSeats;
+    }
+
+    public boolean isStadiumLoaded() {
+        return god.getStadiumLoaded();
+    }
+
+    public void setStadiumLoaded(boolean stadiumLoaded) {
+        this.stadiumLoaded = stadiumLoaded;
+    }
+
+}

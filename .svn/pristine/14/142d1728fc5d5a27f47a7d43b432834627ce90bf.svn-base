@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:body>
+ 
+    	<ui:composition template="/WEB-INF/template/Template.xhtml">
+            <ui:define name="content">
+                <div id="stadion">
+                    <h:form>
+                        <!--
+                            <h:commandButton id="block-nw" class="block" value="NW" action="Block"></h:commandButton>
+                            <h:commandButton id="block-n" class="block" value="N" action="Block"></h:commandButton>
+                            <h:commandButton id="block-no" class="block" value="NO" action="Block"></h:commandButton>
+                            <h:commandButton id="block-w" class="block" value="W" action="Block"></h:commandButton>
+                            <h:commandButton id="block-o" class="block" value="o" action="Block"></h:commandButton>
+                            <h:commandButton id="block-sw" class="block" value="SW" action="Block"></h:commandButton>
+                            <h:commandButton id="block-s" class="block" value="S" action="Block"></h:commandButton>
+                            <h:commandButton id="block-so" class="block" value="SO" action="Block"></h:commandButton>
+                        -->
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="NW"></f:param>
+                            <div id="block-nw" class="block">NW</div>
+                        </h:commandLink>
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="N"></f:param>
+                            <div id="block-n" class="block">N</div>
+                        </h:commandLink>
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="NO"></f:param>
+                            <div id="block-no" class="block">NO</div>
+                        </h:commandLink>
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="W"></f:param>
+                            <div id="block-w" class="block">W</div>
+                        </h:commandLink>
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="O"></f:param>
+                            <div id="block-o" class="block">O</div>
+                        </h:commandLink>
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="SW"></f:param>
+                            <div id="block-sw" class="block">SW</div>
+                        </h:commandLink>
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="S"></f:param>
+                            <div id="block-s" class="block">S</div>
+                        </h:commandLink>
+                        <h:commandLink action="Block">
+                            <f:param name="Richtung" value="SO"></f:param>
+                            <div id="block-so" class="block">SO</div>
+                        </h:commandLink>
+                    </h:form>
+                </div>
+                <div id="stadion-info">
+                    <h:outputText value="#{stadion.stadion}" escape="false"></h:outputText>
+                </div>
+            </ui:define>
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

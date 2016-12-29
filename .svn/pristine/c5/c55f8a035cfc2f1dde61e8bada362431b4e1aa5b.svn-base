@@ -1,0 +1,31 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package drawing;
+
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+
+/**
+ *
+ * @author marcel
+ */
+@Named(value = "navController")
+@Dependent
+public class NavController
+{
+    /**
+     * Creates a new instance of NavController
+     */
+    public NavController()
+    {
+        
+    }
+    public String moveToStadion()
+    {
+        return "Stadion";
+    }
+}

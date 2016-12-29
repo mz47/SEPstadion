@@ -1,0 +1,54 @@
+package drawing;
+
+import java.util.Map;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+
+
+@Named(value = "block")
+@Dependent
+public class Block {
+
+    /**
+     * Creates a new instance of Block
+     */
+    @ManagedProperty(value = "#{param.Richtung")
+    private String Richtung;
+    private String Block;
+
+    public String getBlock() {
+        return Block;
+    }
+
+    public void setBlock(String Block) {
+        this.Block = Block;
+    }
+
+    public String getRichtung() {
+        return Richtung;
+    }
+
+    public void setRichtung(String Richtung) {
+        this.Richtung = Richtung;
+    }
+    
+    public Block() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+        this.Richtung = params.get("Richtung");
+        Draw();
+    }
+    public void Draw()
+    {
+        try {
+            XmlWrapper xml = new XmlWrapper();
+            this.Block = xml.GetBlock("C:\\Stadion.xml", this.Richtung);
+        }
+        catch(Exception ex) {
+            //TODO exception handling
+            this.Block = "Block.Draw Exception.";
+        }
+    }
+}

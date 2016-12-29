@@ -1,0 +1,16 @@
+package modultest;
+
+import email.email;
+
+public class BenachrichtigungTest {
+/*
+    public static void main(String[] args) {
+
+        email.versendeMail("sep.stadion@web.de", "Testmail", "Das ist der Text der Testmail.");
+
+        Benachrichtigung ben = new Benachrichtigung();
+        ben.versendeMail("sep.stadion@web.de", "Testmail", ben.generiereKaufmail("sep.stadion@web.de", "Simpson", "Homer", "777", "Finale: Deutschland vs. Brunei Darussalam", "Loge", "1", "000000000001", "www.google.de"));
+
+        System.out.println("Test beendet.");
+    }*/
+}

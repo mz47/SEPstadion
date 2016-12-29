@@ -1,0 +1,46 @@
+
+package drawing;
+
+import dataStorage.log;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+
+@Named(value = "bean_bewerbung")
+@Dependent
+public class bean_bewerbung {
+
+    private int numberOfSeats;
+    private String email;
+    private String passport;
+    
+    public bean_bewerbung() {
+        
+    }
+    
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+        log.printLog("bean_bewerbung", "email: " + email);
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+        log.printLog("bean_bewerbung", "passport: " + passport);
+    }
+
+}

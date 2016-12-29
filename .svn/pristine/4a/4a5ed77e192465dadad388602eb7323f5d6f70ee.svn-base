@@ -1,0 +1,215 @@
+
+package email;
+
+import buying.bewerbung;
+import buying.transaction;
+import dataStorage.god;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+
+public abstract class email {
+    
+    public static void sendCheckoutMail(transaction trans)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bestätigung");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Sie haben erfolgreich einen oder mehrere Plätze gekauft.");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Ihre Bestelldaten:\n");
+        sb.append("Datum: ");
+        sb.append(trans.getDate());
+        sb.append("\n");
+        sb.append("Rechnungsnummer: ");
+        sb.append(trans.getId());
+        sb.append("\n");
+        sb.append("Anzahl Sitzplätze: ");
+        sb.append(trans.getSeats().size());
+        sb.append("\n");
+        sb.append("Pass-IDs: ");
+        sb.append(trans.getCustomer().getIds().toString());
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Link zur Stornierung: ");
+        sb.append("http://");
+        sb.append(god.getIp());
+        sb.append(":8080/SEPstadion/faces/Stornierung.xhtml?rechnungsnummer=");
+        sb.append(trans.getId());
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("SEPstadion");
+        
+        sendMail(trans.getCustomer().getEmail(), "SEPstadion Buchungsbestätigung", sb.toString());
+    }
+
+    public static void sendCancelMail(transaction trans)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bestätigung");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Sie haben ihre Buchung erfolgreich storniert.");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("SEPstadion");
+        
+        sendMail(trans.getCustomer().getEmail(), "SEPstadion Stornierungsbestätigung", sb.toString());
+    }
+    
+    public static void sendBewerbungsMail(bewerbung bw)
+    {
+        String sub;
+        if(bw.getNumberOfseats() == 1)
+        {
+            sub = "Sitzplatz";
+        }
+        else
+        {
+            sub = "Sitzplätze";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bestätigung");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Sie haben sich erfolgreich für ");
+        sb.append(bw.getNumberOfseats());
+        sb.append(" ");
+        sb.append(sub);
+        sb.append(" beworben.");
+        sb.append("\n"); 
+        sb.append("Falls ihre Bewerbung Erfolg hat, werden Sie umgehend per Email benachrichtigt.");
+        sb.append("\n"); 
+        sb.append("\n");
+        sb.append("SEPstadion");
+        sendMail(bw.getCustomer().getEmail(), "SEPstadion Bewerbungsbestätigung", sb.toString());
+    }
+    
+    public static void sendBewerbungAcceptedMail(transaction trans)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bestätigung");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Ihre Bewerbung auf einen oder mehrere Sitzplätze wurde angenommen.");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Ihre Bestelldaten:\n");
+        sb.append("Datum: ");
+        sb.append(trans.getDate());
+        sb.append("\n");
+        sb.append("Rechnungsnummer: ");
+        sb.append(trans.getId());
+        sb.append("\n");
+        sb.append("Anzahl Sitzplätze: ");
+        sb.append(trans.getSeats().size());
+        sb.append("\n");
+        sb.append("Pass-IDs: ");
+        sb.append(trans.getCustomer().getIds().toString());
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Link zur Stornierung: ");
+        sb.append("http://");
+        sb.append(god.getIp());
+        sb.append(":8080/SEPstadion/faces/Stornierung.xhtml?rechnungsnummer=");
+        sb.append(trans.getId());
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("SEPstadion");
+        
+        sendMail(trans.getCustomer().getEmail(), "SEPstadion Buchungsbestätigung nach Bewerbung", sb.toString());
+    }
+    
+    public static void sendBewerbungNotAcceptedMail(transaction trans)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Information");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("Ihre Bewerbung auf einen oder mehrere Sitzplätze wurde leider abgelehnt.");
+        sb.append("\n");
+        sb.append("Gründe dafür können ein bereits ausgebuchtes Stadion oder ein vorangegangener Besuch eines Spiels in der Gruppenphase sein.");
+        sb.append("Sie können ab sofort gerne versuchen, einen Platz im gewünschten Stadion in der KO-Phase zu erlangen.");
+        sb.append("\n");
+        sb.append("\n");
+        sb.append("SEPstadion");
+        
+        sendMail(trans.getCustomer().getEmail(), "SEPstadion Ablehnung Ihrer Bewerbung", sb.toString());
+    }
+
+
+    private static Boolean sendMail(String Mailadresse, String Betreff, String Text)
+    {
+        //https://javamail.java.net/nonav/docs/api/        
+        //http://en.wikipedia.org/wiki/JavaMail
+        // Recipient's email ID needs to be mentioned.
+        String to = Mailadresse;
+
+        // Sender's email ID needs to be mentioned
+        String from = "sep.stadion@web.de";
+
+        // Assuming you are sending email from localhost
+        String host = "smtp.web.de";
+
+        //Auth
+        final String username = "sep.stadion@web.de";
+        final String password = "SEPyolo!";
+        
+        // Get system properties
+        Properties properties = System.getProperties();
+
+        // Setup mail server
+        //https://hilfe.web.de/e-mail/pop3.html
+        properties.setProperty("mail.smtp.auth", "true");
+        properties.setProperty("mail.smtp.host", host);
+        properties.setProperty("mail.smtp.port", "587");
+
+
+        //use STARTTLS
+        //http://stackoverflow.com/questions/411331/using-javamail-with-tls
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+        
+        //SSL-encryption (nicht benötigt)
+//        properties.setProperty("mail.smtp.socketFactory.port", "587");
+//        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//        properties.setProperty("mail.smtp.socketFactory.fallback", "false");
+
+        // Get the default Session object.
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+          }
+        });
+
+        try
+        {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+
+            // Set Subject: header field
+            message.setSubject(Betreff);
+
+            // Now set the actual message
+            message.setText(Text);
+
+            // Send message
+            Transport.send(message);
+
+        } 
+        catch (Exception ex)
+        {
+            return false;
+        }
+        return true;
+    }
+}

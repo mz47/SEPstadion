@@ -1,0 +1,48 @@
+#stadion {
+        z-index: 1;
+        width: 520px;
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+}
+.block {
+        background-color: #999;
+        width: 120px;
+        height: 120px;
+        z-index: 2;
+        border: 1px solid #666;
+        margin-right: 50px;
+        margin-bottom: 50px;
+}
+.floating {
+        float: left;
+        display: block;
+}
+.kategorie {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+}
+#kat-0 {
+        background-color: #fff;
+}
+#kat-1 {
+        background-color: #ddd;
+        top: 40px;
+}
+#kat-2 {
+        background-color: #bbb;
+        top: 40px;
+}
+.court {
+        background-color: #060;
+        line-height: 120px;
+        text-align: center;
+}
+.clear {
+        clear: left;
+}
+.block a:link {
+    color: #000;
+}

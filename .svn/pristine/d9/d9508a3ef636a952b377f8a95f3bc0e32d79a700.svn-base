@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:body>
+ 
+    	<ui:composition template="/WEB-INF/template/Template.xhtml">
+            <ui:define name="content">
+                <h:form>                   
+                    <div id="stadion">
+                        <div id="block-nw" class="block floating" style="-webkit-transform: rotate(315deg);">
+                            <div id="kat-0" class="kategorie"></div>
+                            <div id="kat-1" class="kategorie"></div>
+                            <div id="kat-2" class="kategorie"></div>
+                        </div>
+                        <div id="block-n" class="block floating">
+                            <h:commandLink action="#{cup.selectCategory('N', 0)}"><div id="kat-0" class="kategorie">Loge</div></h:commandLink>
+                            <h:commandLink action="#{cup.selectCategory('N', 1)}"><div id="kat-1" class="kategorie">Comfort</div></h:commandLink>
+                            <h:commandLink action="#{cup.selectCategory('N', 2)}"><div id="kat-2" class="kategorie">Holzklasse</div></h:commandLink>
+                        </div>
+                        <div id="block-no" class="block floating" style="-webkit-transform: rotate(45deg);">
+                            <h:commandLink action="#{cup.selectCategory('NO', 0)}"><div id="kat-0" class="kategorie">Loge</div></h:commandLink>
+                            <h:commandLink action="#{cup.selectCategory('NO', 1)}"><div id="kat-1" class="kategorie">Comfort</div></h:commandLink>
+                            <h:commandLink action="#{cup.selectCategory('NO', 2)}"><div id="kat-2" class="kategorie">Holzklasse</div></h:commandLink>
+                        </div>
+                        <div class="clear"></div> 
+                        <div id="block-w" class="block floating" style="-webkit-transform: rotate(270deg);">
+                            <div id="kat-0" class="kategorie"></div>
+                            <div id="kat-1" class="kategorie"></div>
+                            <div id="kat-2" class="kategorie"></div>
+                        </div>
+                        <div id="court" class="block floating court">Spielfeld</div>
+                        <div id="block-o" class="block floating" style="-webkit-transform: rotate(90deg);">
+                            <div id="kat-0" class="kategorie"></div>
+                            <div id="kat-1" class="kategorie"></div>
+                            <div id="kat-2" class="kategorie"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div id="block-sw" class="block floating" style="-webkit-transform: rotate(225deg);">
+                            <div id="kat-0" class="kategorie"></div>
+                            <div id="kat-1" class="kategorie"></div>
+                            <div id="kat-2" class="kategorie"></div>
+                        </div>
+                        <div id="block-s" class="block floating" style="-webkit-transform: rotate(180deg);">
+                            <div id="kat-0" class="kategorie"></div>
+                            <div id="kat-1" class="kategorie"></div>
+                            <div id="kat-2" class="kategorie"></div>
+                        </div>
+                        <div id="block-so" class="block floating" style="-webkit-transform: rotate(135deg);">
+                            <div id="kat-0" class="kategorie"></div>
+                            <div id="kat-1" class="kategorie"></div>
+                            <div id="kat-2" class="kategorie"></div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

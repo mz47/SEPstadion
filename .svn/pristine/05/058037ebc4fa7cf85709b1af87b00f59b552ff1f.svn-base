@@ -1,0 +1,24 @@
+package dataStorage;
+
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+
+
+@Named(value = "bean_seat")
+@Dependent
+public class bean_seat {
+
+    private int id;
+    
+    public bean_seat() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        id = Integer.parseInt(context.getExternalContext().getRequestParameterMap().get("id"));
+    }
+    
+    public int getId()
+    {
+        return this.id;
+    }
+    
+}

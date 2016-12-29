@@ -1,0 +1,41 @@
+
+package drawing;
+
+import dataStorage.log;
+import java.util.ArrayList;
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
+
+@Named(value = "bean_customer")
+@Dependent
+public class bean_customer {
+
+    private String email;
+    private String passportId;
+    
+
+    public bean_customer() {
+        //this.email = "mpnw47@gmail.com";
+        //this.passportId = "1234567890";
+    }
+    
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("email", email);
+        this.email = email;
+    }
+
+    public String getPassportId() {
+        return passportId;
+    }
+
+    public void setPassportId(String passportId) {
+        cup.addPassportId(passportId);
+        this.passportId = passportId;
+    }
+    
+}

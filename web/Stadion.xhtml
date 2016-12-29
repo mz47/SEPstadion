@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <f:event listener="#{bean_data.clearContext}" type="preRenderView" />
+    <h:body>
+        
+    	<ui:composition template="/WEB-INF/template/Template.xhtml">
+            <ui:define name="content">
+                <h4><h4><h:outputText value="#{bean_stadium.position}" /></h4></h4>
+                <h:form>    
+                    <div id="stadion">
+                        <div id="nordkurve">
+                            <div id="block-nw" class="block floating rotate-315">
+                                <h:commandLink action="#{bean_cup.selectCategory('NW', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('NW', 0)} #{bean_cup.getCategoryLoad('NW', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('NW', 1)}" value="">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('NW', 1)} #{bean_cup.getCategoryLoad('NW', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('NW', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('NW', 2)} #{bean_cup.getCategoryLoad('NW', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+                            <div id="block-n" class="block floating">
+                                <h:commandLink action="#{bean_cup.selectCategory('N', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('N', 0)} #{bean_cup.getCategoryLoad('N', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('N', 1)}">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('N', 1)} #{bean_cup.getCategoryLoad('N', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('N', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('N', 2)} #{bean_cup.getCategoryLoad('N', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+                            <div id="block-no" class="block floating rotate-45">
+                                <h:commandLink action="#{bean_cup.selectCategory('NO', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('NO', 0)} #{bean_cup.getCategoryLoad('NO', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('NO', 1)}">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('NO', 1)} #{bean_cup.getCategoryLoad('NO', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('NO', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('NO', 2)} #{bean_cup.getCategoryLoad('NO', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+                        </div>
+                        
+                        <div class="clear"></div>
+                        
+                        <div id="zentrum">
+                            <div id="block-w" class="block floating rotate-270">
+                                <h:commandLink action="#{bean_cup.selectCategory('W', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('W', 0)} #{bean_cup.getCategoryLoad('W', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('W', 1)}">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('W', 1)} #{bean_cup.getCategoryLoad('W', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('W', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('W', 2)} #{bean_cup.getCategoryLoad('W', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+
+                            <div id="court" class="block floating court" onclick="window.open('http://iruntheinternet.com/lulzdump/images/world-cup-2014-weird-kid-dancing-lifts-shirt-fan-14038303339.gif', 'ChaChaCha', 'width=312, height=308'); return false;"></div>
+
+                            <div id="block-o" class="block floating rotate-90">
+                                <h:commandLink action="#{bean_cup.selectCategory('O', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('O', 0)} #{bean_cup.getCategoryLoad('O', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('O', 1)}">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('O', 1)} #{bean_cup.getCategoryLoad('O', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('O', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('O', 2)} #{bean_cup.getCategoryLoad('O', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+                        </div>
+                        
+                        <div class="clear"></div>
+                        
+                        <div id="suedkurve">
+                            <div id="block-sw" class="block floating rotate-45">
+                                <h:commandLink action="#{bean_cup.selectCategory('SW', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('SW', 2)} #{bean_cup.getCategoryLoad('SW', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('SW', 1)}">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('SW', 1)} #{bean_cup.getCategoryLoad('SW', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('SW', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('SW', 0)} #{bean_cup.getCategoryLoad('SW', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+                            <div id="block-s" class="block floating">
+                                <h:commandLink action="#{bean_cup.selectCategory('S', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('S', 2)} #{bean_cup.getCategoryLoad('S', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('S', 1)}">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('S', 1)} #{bean_cup.getCategoryLoad('S', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('S', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('S', 0)} #{bean_cup.getCategoryLoad('S', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+                            <div id="block-so" class="block floating rotate-315">
+                                <h:commandLink action="#{bean_cup.selectCategory('SO', 2)}">
+                                    <div id="kat-2" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('SO', 2)} #{bean_cup.getCategoryLoad('SO', 2)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('SO', 1)}">
+                                    <div id="kat-1" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('SO', 1)} #{bean_cup.getCategoryLoad('SO', 1)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                                <h:commandLink action="#{bean_cup.selectCategory('SO', 0)}">
+                                    <div id="kat-0" class="kategorie">
+                                        <h:outputText value="#{bean_cup.getCategoryName('SO', 0)} #{bean_cup.getCategoryLoad('SO', 0)}" escape="false" />
+                                    </div>
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

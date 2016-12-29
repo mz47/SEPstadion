@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <body>
+	    <ui:composition>
+ 
+                SEPstadion &copy; 2014 sep @ uni-due | <h:link outcome="#{bean_auth.redirect()}" value="Admin Login"></h:link>
+ 
+	    </ui:composition>
+    </body>
+</html>

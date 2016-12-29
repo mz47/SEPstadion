@@ -1,0 +1,86 @@
+
+package dataStorage;
+
+import javax.inject.Named;
+import javax.enterprise.context.Dependent;
+
+@Named(value = "game")
+@Dependent
+public class game {
+
+    private int id;
+    private int stadiumId;
+    private String date;
+    private String type;
+    private String team1;
+    private String team2;
+    private float pricing;
+    
+    public game() {
+        //TODO
+    }
+    
+    public game(int stadiumId, String date, String team1, String team2) {
+        this.stadiumId = stadiumId;
+        this.date = date;
+        this.team1 = team1;
+        this.team2 = team2;
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getStadiumId() {
+        return stadiumId;
+    }
+
+    public void setStadiumId(int stadiumId) {
+        this.stadiumId = stadiumId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTeam1() {
+        return team1;
+    }
+
+    public void setTeam1(String team1) {
+        this.team1 = team1;
+    }
+
+    public String getTeam2() {
+        return team2;
+    }
+
+    public void setTeam2(String team2) {
+        this.team2 = team2;
+    }
+
+    public float getPricing() {
+        return pricing;
+    }
+
+    public void setPricing(float pricing) {
+        this.pricing = pricing;
+    }
+    
+}

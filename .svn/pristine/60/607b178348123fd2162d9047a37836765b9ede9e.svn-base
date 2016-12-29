@@ -1,0 +1,201 @@
+
+package drawing;
+
+import dataStorage.block;
+import dataStorage.category;
+import dataStorage.game;
+import dataStorage.stadium;
+import dataStorage.wrapper;
+import java.util.ArrayList;
+import javax.el.MethodExpression;
+import javax.enterprise.context.Dependent;
+import javax.faces.application.Application;
+import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlForm;
+import javax.faces.component.html.HtmlOutputText;
+import javax.faces.component.html.HtmlPanelGroup;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.inject.Named;
+import javax.ws.rs.core.Link;
+
+@Named(value = "cup")
+@Dependent
+public class cup {
+    public stadium stadium;
+    public ArrayList<game> games;
+    public block activeBlock;
+    public category activeCat;
+    public cup()
+    {
+        stadium = wrapper.getStadium("");
+        activeBlock = stadium.getBlock(0);
+        activeCat = activeBlock.getCat_0();
+    }
+    
+    public stadium getStadium()
+    {
+        return this.stadium;
+    }
+    
+    //TODO baustelle
+    public block getActiveBlock()
+    {
+        return this.activeBlock;
+    }
+    public category getActiveCat()
+    {
+        return this.activeCat;
+    }
+    public String selectCategory(String blockPosition, int categoryIndex)
+    {
+        //this.activeBlock = stadium.getBlock(1);
+        //this.activeCat = this.activeBlock.getCat_1();
+        FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("stadium", stadium);
+        FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("blockPosition", blockPosition);
+        FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("categoryIndex", categoryIndex);
+        return "Block";
+    }
+    public String selectSeat()
+    {
+        //FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("selectedStadium", stadium.getBlock(1).getCat_1().getSeat(1));
+        return "Buy";
+    }
+    public String viewBlock()
+    {
+        //this.activeBlock = new block("test2", "hier", null, null, null);
+        //activeCat = activeBlock.getCat_0();
+        return "Block.xhtml";
+    }
+        
+    //Main entry
+    public String drawGames()
+    {
+        try
+        {
+            StringBuilder sb = new StringBuilder();
+            games = wrapper.getGames();
+            if(games.isEmpty() == false)
+            {
+                for (game game : games)
+                {
+                    sb.append(game.getId());
+                    sb.append(": ");
+                    sb.append(game.getTeam1());
+                    sb.append(" vs. ");
+                    sb.append(game.getTeam2());
+                    sb.append("<br />");
+                }
+                return sb.toString();
+            }
+            else
+            {
+                return "games list empty";
+            }
+        }
+        catch(Exception ex)
+        {
+            return ex.getMessage();
+        }
+    }
+    
+    public String drawStadium()
+    {
+        //parameter!
+        StringBuilder sb = new StringBuilder();
+        
+        ArrayList<block> blocks = stadium.getBlocks();
+        sb.append("Stadion: ");
+        sb.append(stadium.getName());
+        sb.append("<br /><br />");
+        for(int i = 0; i < blocks.size(); i++)
+        {
+            sb.append("Block: ");
+            sb.append(blocks.get(i).getName());
+            sb.append("<br />");
+            sb.append("Position: ");
+            sb.append(blocks.get(i).getPos());
+            sb.append("<br />");
+            sb.append(blocks.get(i).getCat_0().getName());
+            sb.append(": ");
+            sb.append(blocks.get(i).getCat_0().getNumberOfSeats());
+            sb.append(" Sitzplätze zu je ");
+            sb.append(blocks.get(i).getCat_0().getPrice());
+            sb.append("<br />");
+            sb.append(blocks.get(i).getCat_1().getName());
+            sb.append(": ");
+            sb.append(blocks.get(i).getCat_1().getNumberOfSeats());
+            sb.append(" Sitzplätze zu je ");
+            sb.append(blocks.get(i).getCat_1().getPrice());
+            sb.append("<br />");
+            sb.append(blocks.get(i).getCat_2().getName());
+            sb.append(": ");
+            sb.append(blocks.get(i).getCat_2().getNumberOfSeats());
+            sb.append(" Sitzplätze zu je ");
+            sb.append(blocks.get(i).getCat_2().getPrice());
+            sb.append("<br />");
+            sb.append("<br />");
+        }
+        return sb.toString();
+    }
+    
+    public HtmlPanelGroup drawSeats()
+    {
+        String blockPos = (String) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("blockPosition");
+        int categoryIndex = (int) FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().get("categoryIndex");
+        block block = stadium.getBlock(blockPos);
+        category category = block.getCategory(categoryIndex);
+        
+        StringBuilder sb = new StringBuilder();
+        
+        Application app = FacesContext.getCurrentInstance().getApplication();
+        HtmlPanelGroup form = (HtmlPanelGroup) app.createComponent(HtmlPanelGroup.COMPONENT_TYPE);
+        
+
+        for(int i = 0; i < category.getNumberOfSeats(); i++)
+        {
+            String style = "seat";
+            //if(i % 20 == 0)
+            //{
+            //    sb.append("<div class='clear'></div>");
+            //}
+            //sb.append("<div class='seat'>");
+            //sb.append(i);
+            //sb.append("</div>");
+
+            
+            HtmlCommandLink link = (HtmlCommandLink) app.createComponent(HtmlCommandLink.COMPONENT_TYPE);
+            link.setValue(i);
+            link.setActionExpression(createMethodExpression("#{cup.dings(" + i + ")}", String.class));
+            
+            HtmlOutputText openDiv = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+            HtmlOutputText closeDiv = (HtmlOutputText) app.createComponent(HtmlOutputText.COMPONENT_TYPE);
+            
+            openDiv.setValue("<div class='"+style+"'>");
+            closeDiv.setValue("</div>");
+            openDiv.setEscape(false);
+            closeDiv.setEscape(false);
+            
+            form.getChildren().add(openDiv);
+            form.getChildren().add(link);
+            form.getChildren().add(closeDiv);
+        }
+        
+        //return sb.toString();
+        return form;
+    }
+    
+    public String dings(int id)
+    {
+        FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("selectedSeat", id);
+        return "Buy";
+    }
+    
+    
+    private static MethodExpression createMethodExpression(String expression, Class<?> returnType) {
+    FacesContext context = FacesContext.getCurrentInstance();
+    return context.getApplication().getExpressionFactory().createMethodExpression(
+        context.getELContext(), expression, returnType, new Class[0]);
+}
+}
